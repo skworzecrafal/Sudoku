@@ -32,13 +32,14 @@ public:
     Komorka plansza[9][9];
     QFrame* linie[8];
     QTimer* zegar;
-    ListaWynikow listaEasy;
-    ListaWynikow listaMedium;
-    ListaWynikow listaHard;
+    ListaWynikow lista[4];
     Opcje oknoOpcje;
+    OknoWyniki okno;
     int i,j,wpisane,sek,min;
     void wypisz(bool w);
-    bool isClickedNG;    
+    bool isClickedNG;
+    bool isClickedOpcje;
+    bool isClickedTW;
     void close99();
     void show99();
 
@@ -65,6 +66,8 @@ private slots:
     void on_medium_clicked();
 
     void on_hard_clicked();
+
+    void on_tabWyn_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -8,20 +8,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    sek=0;
-    min=0;
-    isClickedNG=false;
+    sek = 0;
+    min = 0;
+    isClickedNG = false;
+    isClickedOpcje = false;
+    isClickedTW = false;
     zegar = new QTimer(this);
     zegar->stop();
     connect(zegar,SIGNAL(timeout()),SLOT(zegarek()));
-    listaEasy.wczytaj("wyniki99easy.txt");
-    listaMedium.wczytaj("wyniki99medium.txt");
-    listaHard.wczytaj("wyniki99hard.txt");
+    lista[0].wczytaj("wyniki99easy.txt");
+    lista[1].wczytaj("wyniki99medium.txt");
+    lista[2].wczytaj("wyniki99hard.txt");
     connect(oknoOpcje.easy,SIGNAL(clicked()),this,SLOT(on_easy_clicked()));
     connect(oknoOpcje.medium,SIGNAL(clicked()),this,SLOT(on_medium_clicked()));
     connect(oknoOpcje.hard,SIGNAL(clicked()),this,SLOT(on_hard_clicked()));
-    OknoWyniki okno;
-    okno.oknoWyniki->show();
+
 }
 
 MainWindow::~MainWindow()
@@ -37,10 +38,7 @@ void MainWindow::zegarek()
          min++;
          sek = 0;
      }
-     ui->sek_j->setText(QString::number(sek%10));
-     ui->sek_d->setText(QString::number(sek/10));
-     ui->min_j->setText(QString::number(min%10));
-     ui->min_d->setText(QString::number(min/10));
+     ui->czas->setText(QString::number(min/10)+QString::number(min%10)+":"+QString::number(sek/10)+QString::number(sek%10));
 }
 
 void MainWindow::doTablicy99()
@@ -61,15 +59,24 @@ void MainWindow::on_nowaGra_clicked()
 {
     if(isClickedNG)
         close99();
+    if(isClickedOpcje)
+    {
+        oknoOpcje.oknoOpcje->close();
+        isClickedOpcje = false;
+    }
+    if(isClickedTW)
+    {
+        okno.zamknij();
+        okno.oknoWyniki->close();
+        isClickedTW = false;
+    }
 
     show99();
     wpisane = 0;
     ui->Koniec->setText("");
-    ui->sek_j->setText("0");
-    ui->sek_d->setText("0");
-    ui->min_j->setText("0");
-    ui->min_d->setText("0");
     min=sek=0;
+    ui->czas->setText(QString::number(min/10)+QString::number(min%10)+":"+QString::number(sek/10)+QString::number(sek%10));
+
     zegar->start(1000);
     g.generowanie(tab.tablica,tab.tabPelna,oknoOpcje.poziomC);
     wypisz(true);
@@ -169,6 +176,7 @@ void MainWindow::close99()
 void MainWindow::on_opcje_clicked()
 {
     oknoOpcje.oknoOpcje->show();
+    isClickedOpcje = true;
 }
 
 void MainWindow::on_Check_clicked()
@@ -207,19 +215,7 @@ void MainWindow::on_Check_clicked()
             wynik->setImie("zanek");
             wynik->setMinuty(min);
             wynik->setSekundy(sek);
-            switch (oknoOpcje.poziomC) {
-            case 1:
-                listaEasy.dodaj(wynik);
-                break;
-            case 2:
-                listaMedium.dodaj(wynik);
-                break;
-            case 3:
-                listaHard.dodaj(wynik);
-                break;
-            default:
-                break;
-            }
+            lista[oknoOpcje.poziomC - 1].dodaj(wynik);
 
         }
         else
@@ -266,9 +262,20 @@ void MainWindow::on_pomoc_2_clicked()
 
 void MainWindow::on_wyjscie_clicked()
 {
-    listaEasy.zapisz("wyniki99easy.txt");
-    listaMedium.zapisz("wyniki99medium.txt");
-    listaHard.zapisz("wyniki99hard.txt");
+    lista[0].zapisz("wyniki99easy.txt");
+    lista[1].zapisz("wyniki99medium.txt");
+    lista[2].zapisz("wyniki99hard.txt");
+    if(isClickedNG)
+        close99();
+    if(isClickedOpcje)
+    {
+        oknoOpcje.oknoOpcje->close();
+    }
+    if(isClickedTW)
+    {
+        okno.zamknij();
+        okno.oknoWyniki->close();
+    }
 }
 void MainWindow::on_easy_clicked()
 {
@@ -305,3 +312,12 @@ void MainWindow::on_hard_clicked()
 
 
 
+
+void MainWindow::on_tabWyn_clicked()
+{
+    if(isClickedTW)
+        okno.zamknij();
+    okno.wypisz(lista);
+    okno.oknoWyniki->show();
+    isClickedTW = true;
+}

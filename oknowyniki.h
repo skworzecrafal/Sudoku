@@ -3,15 +3,23 @@
 #include <QTabWidget>
 #include <QMainWindow>
 #include <QWidget>
+#include <QLabel>
+#include "listawynikow.h"
+#include "wynik.h"
 
 class OknoWyniki: public QMainWindow
 {
 public:
     OknoWyniki();
+    ~OknoWyniki();
     QTabWidget* oknoWyniki;
-    QWidget* easy;
-    QWidget* medium;
-    QWidget* hard;
+    QWidget* poziom[4];
+    QLabel* label[4][10][3]; // 0 - easy; 1 - medium; 2 - hard; 3 - samuraj;
+    QLabel* info[4][2];
+    int liczba[4];
+
+    void wypisz(ListaWynikow lista[]);
+    void zamknij();
 };
 
 #endif // OKNOWYNIKI_H
