@@ -19,6 +19,8 @@ ListaWynikow::~ListaWynikow()
             delete iteracja;
             iteracja = iteracjanastepny;
         }while(iteracja != NULL);
+    liczba = 0;
+    pierwszy = ostatni = NULL;
 }
 
 void ListaWynikow::dodaj(Wynik *nowy)

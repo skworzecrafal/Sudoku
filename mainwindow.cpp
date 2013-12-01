@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     isClickedNG = false;
     isClickedOpcje = false;
     isClickedTW = false;
+    isClickedCheck = false;
     zegar = new QTimer(this);
     zegar->stop();
     connect(zegar,SIGNAL(timeout()),SLOT(zegarek()));
@@ -22,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(oknoOpcje.easy,SIGNAL(clicked()),this,SLOT(on_easy_clicked()));
     connect(oknoOpcje.medium,SIGNAL(clicked()),this,SLOT(on_medium_clicked()));
     connect(oknoOpcje.hard,SIGNAL(clicked()),this,SLOT(on_hard_clicked()));
+    connect(oknoOpcje.reset,SIGNAL(clicked()),this,SLOT(resetWynikow()));
+    connect(dodajWynik.ok,SIGNAL(clicked()),this,SLOT(nowyWynik()));
 
 }
 
@@ -80,7 +83,8 @@ void MainWindow::on_nowaGra_clicked()
     zegar->start(1000);
     g.generowanie(tab.tablica,tab.tabPelna,oknoOpcje.poziomC);
     wypisz(true);
-    isClickedNG=true;
+    isClickedNG = true;
+    isClickedCheck = false;
 }
 void MainWindow::wypisz(bool w)
 {
@@ -207,15 +211,12 @@ void MainWindow::on_Check_clicked()
                 war=false;
                 break;
             }
-        Wynik* wynik;
         if (war)
         {
             ui->Koniec->setText("Brawo!!! :D");
-            wynik = new Wynik();
-            wynik->setImie("zanek");
-            wynik->setMinuty(min);
-            wynik->setSekundy(sek);
-            lista[oknoOpcje.poziomC - 1].dodaj(wynik);
+            if(!isClickedCheck)
+                dodajWynik.okno->show();
+            isClickedCheck = true;
 
         }
         else
@@ -317,7 +318,20 @@ void MainWindow::on_tabWyn_clicked()
 {
     if(isClickedTW)
         okno.zamknij();
+    okno.oknoWyniki->setCurrentIndex(0);
     okno.wypisz(lista);
     okno.oknoWyniki->show();
     isClickedTW = true;
+}
+
+void MainWindow::resetWynikow()
+{
+    for(int i=0;i<3;i++)
+        lista[i].~ListaWynikow();
+}
+
+void MainWindow::nowyWynik()
+{
+    dodajWynik.dodaj(lista,oknoOpcje.poziomC,min,sek);
+    dodajWynik.okno->close();
 }

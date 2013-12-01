@@ -14,6 +14,7 @@ public:
     QPushButton* medium;
     QPushButton* hard;
     QPushButton* back;
+    QPushButton* reset;
     QLabel* opcje1;
     QLabel* poziom;
     int poziomC;

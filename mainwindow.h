@@ -12,6 +12,7 @@
 #include "opcje.h"
 #include "listawynikow.h"
 #include "oknowyniki.h"
+#include "dodajwynik.h"
 
 
 
@@ -35,11 +36,13 @@ public:
     ListaWynikow lista[4];
     Opcje oknoOpcje;
     OknoWyniki okno;
+    DodajWynik dodajWynik;
     int i,j,wpisane,sek,min;
     void wypisz(bool w);
     bool isClickedNG;
     bool isClickedOpcje;
     bool isClickedTW;
+    bool isClickedCheck;
     void close99();
     void show99();
 
@@ -68,6 +71,10 @@ private slots:
     void on_hard_clicked();
 
     void on_tabWyn_clicked();
+
+    void resetWynikow();
+
+    void nowyWynik();
 
 private:
     Ui::MainWindow *ui;

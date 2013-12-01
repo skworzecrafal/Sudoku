@@ -4,8 +4,7 @@ Opcje::Opcje()
 {
     poziomC = 1;
     oknoOpcje = new QWidget;
-    oknoOpcje->setMinimumSize(470,500);
-    oknoOpcje->setMaximumSize(470,500);
+    oknoOpcje->setFixedSize(470,500);
     easy = new QPushButton(oknoOpcje);
     easy->setGeometry(5,55,150,50);
     easy->setText("Łatwy");
@@ -32,6 +31,9 @@ Opcje::Opcje()
     connect(easy,SIGNAL(clicked()),SLOT(on_easy_clicked()));
     connect(medium,SIGNAL(clicked()),SLOT(on_medium_clicked()));
     connect(hard,SIGNAL(clicked()),SLOT(on_hard_clicked()));
+    reset = new QPushButton(oknoOpcje);
+    reset->setGeometry(390,430,75,30);
+    reset->setText("Reset");
 }
 
 void Opcje::on_easy_clicked()
