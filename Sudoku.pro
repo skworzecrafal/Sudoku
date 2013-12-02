@@ -14,7 +14,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    plansza.cpp \
     generacja.cpp \
     komorka.cpp \
     wynik.cpp \
@@ -24,7 +23,6 @@ SOURCES += main.cpp\
     dodajwynik.cpp
 
 HEADERS  += mainwindow.h \
-    plansza.h \
     generacja.h \
     komorka.h \
     wynik.h \

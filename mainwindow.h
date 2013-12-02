@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QWidget>
 #include <stdlib.h>
-#include "plansza.h"
 #include "generacja.h"
 #include <QFrame>
 #include "komorka.h"
@@ -28,7 +27,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    Plansza tab;
     Generacja g;
     Komorka plansza[9][9];
     QFrame* linie[8];

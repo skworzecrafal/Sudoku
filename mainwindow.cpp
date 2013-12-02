@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(oknoOpcje.hard,SIGNAL(clicked()),this,SLOT(on_hard_clicked()));
     connect(oknoOpcje.reset,SIGNAL(clicked()),this,SLOT(resetWynikow()));
     connect(dodajWynik.ok,SIGNAL(clicked()),this,SLOT(nowyWynik()));
-
+    connect(dodajWynik.gracz,SIGNAL(returnPressed()),this,SLOT(nowyWynik()));
 }
 
 MainWindow::~MainWindow()
@@ -50,8 +50,8 @@ void MainWindow::doTablicy99()
     for (int w=0;w<9;w++)
         for (int k=0;k<9;k++)
         {
-            tab.tablica[w][k]=plansza[w][k].pole->text().toInt();
-            if (!tab.tablica[w][k])
+            plansza[w][k].wartoscGra=plansza[w][k].pole->text().toInt();
+            if (!plansza[w][k].wartoscGra)
                 plansza[w][k].pole->setText("");
             else
                 wpisane++;
@@ -81,7 +81,7 @@ void MainWindow::on_nowaGra_clicked()
     ui->czas->setText(QString::number(min/10)+QString::number(min%10)+":"+QString::number(sek/10)+QString::number(sek%10));
 
     zegar->start(1000);
-    g.generowanie(tab.tablica,tab.tabPelna,oknoOpcje.poziomC);
+    g.generowanie(plansza,oknoOpcje.poziomC);
     wypisz(true);
     isClickedNG = true;
     isClickedCheck = false;
@@ -92,10 +92,10 @@ void MainWindow::wypisz(bool w)
     {
         for(j=0;j<9;j++)
         {
-            if(tab.tablica[i][j])
+            if(plansza[i][j].wartoscGra)
             {
                 plansza[i][j].format(!w);
-                plansza[i][j].pole->setText(QString::number(tab.tablica[i][j]));
+                plansza[i][j].pole->setText(QString::number(plansza[i][j].wartoscGra));
             }
             else
             {
@@ -196,8 +196,8 @@ void MainWindow::on_Check_clicked()
             su=0;
             for (int k=0;k<9;k++)
             {
-                su+=tab.tablica[w][k];
-                sum[k]+=tab.tablica[w][k];
+                su+=plansza[w][k].wartoscGra;
+                sum[k]+=plansza[w][k].wartoscGra;
             }
             if(su!=45)
             {
@@ -215,7 +215,12 @@ void MainWindow::on_Check_clicked()
         {
             ui->Koniec->setText("Brawo!!! :D");
             if(!isClickedCheck)
+            {
+
                 dodajWynik.okno->show();
+                dodajWynik.gracz->setFocus();
+                dodajWynik.gracz->selectAll();
+            }
             isClickedCheck = true;
 
         }
@@ -238,7 +243,7 @@ void MainWindow::on_pomoc_clicked()
     for(w=0;w<9;w++)
         for(k=0;k<9;k++)
         {
-            if(!tab.tablica[w][k])
+            if(!plansza[w][k].wartoscGra)
             {
                 tab1[rozm]=tabl[w][k];
                 rozm++;
@@ -248,7 +253,7 @@ void MainWindow::on_pomoc_clicked()
     wsp = rand() % rozm;
     w = tab1[wsp]/10;
     k = tab1[wsp] % 10;
-    plansza[w][k].pole->setText(QString::number(tab.tabPelna[w][k]));
+    plansza[w][k].pole->setText(QString::number(plansza[w][k].wartoscZnana));
 }
 
 void MainWindow::on_pomoc_2_clicked()
@@ -257,7 +262,7 @@ void MainWindow::on_pomoc_2_clicked()
     for(int w=0;w<9;w++)
         for(int k=0;k<9;k++)
         {
-            plansza[w][k].pole->setText(QString::number(tab.tabPelna[w][k]));
+            plansza[w][k].pole->setText(QString::number(plansza[w][k].wartoscZnana));
         }
 }
 

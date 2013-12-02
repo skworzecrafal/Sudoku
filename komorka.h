@@ -12,6 +12,8 @@ class Komorka
 public:
     Komorka();
     QLineEdit *pole;
+    int wartoscGra;
+    int wartoscZnana;
     void format(bool write);
 
 };

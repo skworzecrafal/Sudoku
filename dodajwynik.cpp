@@ -4,10 +4,11 @@ DodajWynik::DodajWynik()
 {
     okno = new QWidget();
     okno->setFixedSize(150,100);
-    okno->setWindowTitle("");
+    okno->setWindowTitle(" ");
     gracz = new QLineEdit(okno);
     gracz->setGeometry(20,10,110,30);
     gracz->setAlignment(Qt::AlignCenter);
+    gracz->setMaxLength(20);
     gracz->setText("Gracz");
     ok = new QPushButton(okno);
     ok->setGeometry(45,55,60,30);

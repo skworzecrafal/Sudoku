@@ -3,7 +3,7 @@
 
 Komorka::Komorka()
 {
-
+    wartoscGra = wartoscZnana = 0;
 }
 
 void Komorka::format(bool write)

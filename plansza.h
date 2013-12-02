@@ -1,6 +1,5 @@
 
 #pragma once
-#include "generacja.h"
 class Plansza
 
 {
