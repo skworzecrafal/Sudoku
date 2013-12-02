@@ -198,7 +198,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Format C:\</string>
+     <string>1 cyfra</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pomoc_2">

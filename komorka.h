@@ -2,19 +2,25 @@
 #define KOMORKA_H
 
 #include <QLineEdit>
+#include <QObject>
 
 
 
-class Komorka
+
+class Komorka: public QObject
 
 {
-
+Q_OBJECT
 public:
     Komorka();
+    ~Komorka();
     QLineEdit *pole;
     int wartoscGra;
     int wartoscZnana;
     void format(bool write);
+
+public slots:
+    void ustaw();
 
 };
 

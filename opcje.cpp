@@ -28,9 +28,9 @@ Opcje::Opcje()
     poziom->setGeometry(355,5,115,45);
     poziom->setText("Łatwy");
     poziom->setStyleSheet("font: 20pt MS Shell Dlg 2;");
-    connect(easy,SIGNAL(clicked()),SLOT(on_easy_clicked()));
-    connect(medium,SIGNAL(clicked()),SLOT(on_medium_clicked()));
-    connect(hard,SIGNAL(clicked()),SLOT(on_hard_clicked()));
+    connect(easy,SIGNAL(clicked()),this,SLOT(on_easy_clicked()));
+    connect(medium,SIGNAL(clicked()),this,SLOT(on_medium_clicked()));
+    connect(hard,SIGNAL(clicked()),this,SLOT(on_hard_clicked()));
     reset = new QPushButton(oknoOpcje);
     reset->setGeometry(390,430,75,30);
     reset->setText("Reset");

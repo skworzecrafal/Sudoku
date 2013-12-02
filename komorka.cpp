@@ -1,9 +1,15 @@
 #include "komorka.h"
-#include <QColor>
 
 Komorka::Komorka()
 {
     wartoscGra = wartoscZnana = 0;
+    pole = new QLineEdit();
+    connect(pole,SIGNAL(editingFinished()),SLOT(ustaw()));
+}
+
+Komorka::~Komorka()
+{
+    delete pole;
 }
 
 void Komorka::format(bool write)
@@ -24,5 +30,12 @@ void Komorka::format(bool write)
         pole->setAlignment(Qt::AlignCenter);
         pole->setMaxLength(1);
     }
+}
+
+void Komorka::ustaw()
+{
+    wartoscGra=pole->text().toInt();
+    if (!wartoscGra)
+        pole->setText("");
 }
 

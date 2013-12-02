@@ -8,18 +8,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    /*
+     * ustawienie wartości startowych
+     */
     sek = 0;
     min = 0;
     isClickedNG = false;
     isClickedOpcje = false;
     isClickedTW = false;
     isClickedCheck = false;
+    /*
+     * utworzenie zagara do gry
+     **/
     zegar = new QTimer(this);
     zegar->stop();
     connect(zegar,SIGNAL(timeout()),SLOT(zegarek()));
+    /*
+     *załadowanie listy wyników
+     */
     lista[0].wczytaj("wyniki99easy.txt");
     lista[1].wczytaj("wyniki99medium.txt");
     lista[2].wczytaj("wyniki99hard.txt");
+    /*
+     *ustawienie akcji do buttonów
+     */
     connect(oknoOpcje.easy,SIGNAL(clicked()),this,SLOT(on_easy_clicked()));
     connect(oknoOpcje.medium,SIGNAL(clicked()),this,SLOT(on_medium_clicked()));
     connect(oknoOpcje.hard,SIGNAL(clicked()),this,SLOT(on_hard_clicked()));
@@ -30,9 +42,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete zegar;
     delete ui;
 }
 
+/*
+ *  obsługa sygnału wydawanego przez zegar
+ */
 void MainWindow::zegarek()
 {
      sek++;
@@ -43,21 +59,9 @@ void MainWindow::zegarek()
      }
      ui->czas->setText(QString::number(min/10)+QString::number(min%10)+":"+QString::number(sek/10)+QString::number(sek%10));
 }
-
-void MainWindow::doTablicy99()
-{
-    wpisane = 0;
-    for (int w=0;w<9;w++)
-        for (int k=0;k<9;k++)
-        {
-            plansza[w][k].wartoscGra=plansza[w][k].pole->text().toInt();
-            if (!plansza[w][k].wartoscGra)
-                plansza[w][k].pole->setText("");
-            else
-                wpisane++;
-        }
-}
-
+/*
+ *  obsługa nowej gry
+ */
 void MainWindow::on_nowaGra_clicked()
 {
     if(isClickedNG)
@@ -86,6 +90,9 @@ void MainWindow::on_nowaGra_clicked()
     isClickedNG = true;
     isClickedCheck = false;
 }
+/*
+ *wypisuje wartości początkowe do planszy
+ */
 void MainWindow::wypisz(bool w)
 {
     for(i=0;i<9;i++)
@@ -105,16 +112,17 @@ void MainWindow::wypisz(bool w)
         }
     }
 }
-
+/*
+ *wyświetlenie planszy o wymiarach 9x9
+ */
 void MainWindow::show99()
 {
     for(i=0;i<9;i++)
         for(j=0;j<9;j++)
         {
-            plansza[i][j].pole = new QLineEdit(this);
+            plansza[i][j].pole->setParent(this);
             plansza[i][j].pole->setGeometry(j*60+60,i*60+125,60,60);
             plansza[i][j].pole->show();
-            connect(plansza[i][j].pole,SIGNAL(editingFinished()),SLOT(doTablicy99()));
         }
     for (int w=0;w<4;w++)
     {
@@ -159,35 +167,44 @@ void MainWindow::show99()
         }
     }
 }
-
+/*
+ *wyłącza plansze 9x9
+ */
 void MainWindow::close99()
 {
     for(i=0;i<9;i++)
         for(j=0;j<9;j++)
         {
             plansza[i][j].pole->close();
-            delete plansza[i][j].pole;
         }
     for(i=0;i<8;i++)
     {
         linie[i]->close();
         delete linie[i];
     }
-    disconnect();
 }
-
+/*
+ *otwiera okno opcji
+ */
 
 void MainWindow::on_opcje_clicked()
 {
     oknoOpcje.oknoOpcje->show();
     isClickedOpcje = true;
 }
-
+/*
+ *sprawdza rozwiązanie
+ */
 void MainWindow::on_Check_clicked()
 {
 
     bool war=true;
+    wpisane = 0;
     int su,sum[9]={0,0,0,0,0,0,0,0,0};
+    for(int w=0;w<9;w++)
+        for(int k=0;k<9;k++)
+            if(plansza[w][k].wartoscGra)
+                wpisane++;
     if(wpisane==81)
     {
         zegar->stop();
@@ -250,10 +267,14 @@ void MainWindow::on_pomoc_clicked()
             }
 
         }
-    wsp = rand() % rozm;
-    w = tab1[wsp]/10;
-    k = tab1[wsp] % 10;
-    plansza[w][k].pole->setText(QString::number(plansza[w][k].wartoscZnana));
+    if(rozm)
+    {
+        wsp = rand() % rozm;
+        w = tab1[wsp]/10;
+        k = tab1[wsp] % 10;
+        plansza[w][k].pole->setText(QString::number(plansza[w][k].wartoscZnana));
+        plansza[w][k].pole->editingFinished();
+    }
 }
 
 void MainWindow::on_pomoc_2_clicked()
@@ -263,9 +284,12 @@ void MainWindow::on_pomoc_2_clicked()
         for(int k=0;k<9;k++)
         {
             plansza[w][k].pole->setText(QString::number(plansza[w][k].wartoscZnana));
+            plansza[w][k].pole->editingFinished();
         }
 }
-
+/*
+ *wyjście z programu i zapisanie listy wyników do plików
+ */
 void MainWindow::on_wyjscie_clicked()
 {
     lista[0].zapisz("wyniki99easy.txt");
@@ -283,6 +307,9 @@ void MainWindow::on_wyjscie_clicked()
         okno.oknoWyniki->close();
     }
 }
+/*
+ * poziom łatwy
+ */
 void MainWindow::on_easy_clicked()
 {
     min = sek = 0;
@@ -293,7 +320,9 @@ void MainWindow::on_easy_clicked()
         isClickedNG = false;
     }
 }
-
+/*
+ *poziom średni
+ */
 void MainWindow::on_medium_clicked()
 {
     min = sek = 0;
@@ -304,7 +333,9 @@ void MainWindow::on_medium_clicked()
         isClickedNG = false;
     }
 }
-
+/*
+ *poziom trudny
+ */
 void MainWindow::on_hard_clicked()
 {
     min = sek = 0;
@@ -315,10 +346,9 @@ void MainWindow::on_hard_clicked()
         isClickedNG = false;
     }
 }
-
-
-
-
+/*
+ *otwarcie okna z listą wyników
+ */
 void MainWindow::on_tabWyn_clicked()
 {
     if(isClickedTW)
@@ -328,13 +358,17 @@ void MainWindow::on_tabWyn_clicked()
     okno.oknoWyniki->show();
     isClickedTW = true;
 }
-
+/*
+ *reset listy wyników
+ */
 void MainWindow::resetWynikow()
 {
     for(int i=0;i<3;i++)
         lista[i].~ListaWynikow();
 }
-
+/*
+ *slot dodania nowego wyniku
+ */
 void MainWindow::nowyWynik()
 {
     dodajWynik.dodaj(lista,oknoOpcje.poziomC,min,sek);

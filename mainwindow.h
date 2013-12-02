@@ -48,8 +48,6 @@ private slots:
 
     void on_nowaGra_clicked();
 
-    void doTablicy99();
-
     void zegarek();
 
     void on_opcje_clicked();

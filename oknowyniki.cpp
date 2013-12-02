@@ -91,5 +91,5 @@ void OknoWyniki::zamknij()
 
 OknoWyniki::~OknoWyniki()
 {
-
+    delete oknoWyniki;
 }
