@@ -81,20 +81,24 @@ void ListaWynikow::wczytaj(char nazwa[])
     char imie[30];
     int min,sek,i = 0,liczba;
     dane.open(nazwa,std::ios::in);
-    dane>>liczba;
-    do
+    if(dane.is_open())
     {
-        if(!liczba)
-            break;
-        wynik = new Wynik();
-        dane>> imie >> min >> sek;
-        wynik->setImie(imie);
-        wynik->setMinuty(min);
-        wynik->setSekundy(sek);
-        dodaj(wynik);
-        i++;
-    }while(i<liczba);
-    dane.close();
+        dane>>liczba;
+        do
+        {
+            if(!liczba)
+                break;
+            wynik = new Wynik();
+            dane>> imie >> min >> sek;
+            wynik->setImie(imie);
+            wynik->setMinuty(min);
+            wynik->setSekundy(sek);
+            dodaj(wynik);
+            i++;
+        }while(i<liczba);
+        dane.close();
+    }
+
 }
 
 void ListaWynikow::zapisz(char nazwa[])

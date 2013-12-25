@@ -19,7 +19,7 @@ public:
     int wartoscZnana;
     void format(bool write);
 
-public slots:
+private slots:
     void ustaw();
 
 };

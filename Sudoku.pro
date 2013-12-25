@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     listawynikow.cpp \
     opcje.cpp \
     oknowyniki.cpp \
-    dodajwynik.cpp
+    dodajwynik.cpp \
+    plansza99.cpp
 
 HEADERS  += mainwindow.h \
     generacja.h \
@@ -29,6 +30,7 @@ HEADERS  += mainwindow.h \
     listawynikow.h \
     opcje.h \
     oknowyniki.h \
-    dodajwynik.h
+    dodajwynik.h \
+    plansza99.h
 
 FORMS    += mainwindow.ui

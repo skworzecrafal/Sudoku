@@ -19,12 +19,12 @@ public:
     QLabel* poziom;
     int poziomC;
 
-public slots:
-    void on_easy_clicked();
+private slots:
+    void easy_clicked();
 
-    void on_medium_clicked();
+    void medium_clicked();
 
-    void on_hard_clicked();
+    void hard_clicked();
 };
 
 #endif // OPCJE_H

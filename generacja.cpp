@@ -126,20 +126,20 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
 
     int indeks,licznik2;
     int licznik=0,licznik1=0;
+    bool war;
+    for(i=1;i<10;i++)
+        for(j=1;j<10;j++)
+        {
+            tabWsp[rozmiarWsp]=tabKwWsp[i-1][j-1]=i*10+j;
+            tabLog[i-1][j-1]=1;
+            rozmiarWsp++;
+        }
     switch (ile) {
     case 1:
-        for(i=1;i<10;i++)
-            for(j=1;j<10;j++)
-            {
-                tabWsp[rozmiarWsp]=tabKwWsp[i-1][j-1]=i*10+j;
-                tabLog[i-1][j-1]=1;
-                rozmiarWsp++;
-            }
-
-
         while(licznik<45)
         {
             indeks = rand() % rozmiarWsp;
+            war = false;
             wsp = tabWsp[indeks];
             w = wsp/10 - 1;
             k = wsp%10 - 1;
@@ -150,6 +150,8 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
                     if (plansza[i][j].wartoscGra==plansza[w][k].wartoscGra)
                         licznik2++;
                 }
+
+
             if (licznik2>4)
                 if((w>0)&&(w<8)&&(k>0)&&(k<8))
                 {
@@ -189,13 +191,6 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
         }
         break;
     case 2:
-        for(i=1;i<10;i++)
-            for(j=1;j<10;j++)
-            {
-                tabWsp[rozmiarWsp]=tabKwWsp[i-1][j-1]=i*10+j;
-                tabLog[i-1][j-1]=1;
-                rozmiarWsp++;
-            }
         while(licznik<50)
         {
             indeks = rand() % rozmiarWsp;
@@ -262,13 +257,6 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
         }
         break;
     case 3:
-        for(i=1;i<10;i++)
-            for(j=1;j<10;j++)
-            {
-                tabWsp[rozmiarWsp]=tabKwWsp[i-1][j-1]=i*10+j;
-                tabLog[i-1][j-1]=1;
-                rozmiarWsp++;
-            }
         while(licznik<53)
         {
             indeks = rand() % rozmiarWsp;
@@ -347,3 +335,41 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
 }
 
 
+/* ?????????? */
+
+//            if(licznik2>4)
+//            {
+//                for(i=0;i<9;i++)
+//                    if(tabLog[i][k])
+//                        licznik1++;
+//                if(licznik1>4)
+//                    war = true;
+//                licznik1 = 0;
+//                for(i=0;i<9;i++)
+//                    if(tabLog[w][i])
+//                        licznik1++;
+//                if(licznik1>4)
+//                    war = true;
+//                if(war)
+//                {
+//                    plansza[w][k].wartoscGra = 0;
+//                    licznik++;
+//                    tabLog[w][k]=0;
+//                }
+//                else
+//                {
+//                    tabLog[w][k] = 0;
+//                    wiersz(w,tabLog);
+//                    kolumna(k,tabLog);
+//                }
+
+//                rozmiarWsp = 0;
+//                for(i=0;i<9;i++)
+//                    for(j=0;j<9;j++)
+//                    {
+//                        if(tabLog[i][j])
+//                        {
+//                            tabWsp[rozmiarWsp] = tabKwWsp[i][j];
+//                            rozmiarWsp++;
+//                        }
+//                    }
