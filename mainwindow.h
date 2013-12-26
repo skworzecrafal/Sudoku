@@ -11,6 +11,7 @@
 #include "oknowyniki.h"
 #include "dodajwynik.h"
 #include "plansza99.h"
+#include "planszasamuraj.h"
 
 
 
@@ -33,6 +34,7 @@ public:
     OknoWyniki okno;
     DodajWynik dodajWynik;
     Plansza99* plansza99;
+    PlanszaSamuraj* samuraj;
     int i,j,wpisane,sek,min;
     void wypisz(bool w);
     bool isClickedNG;

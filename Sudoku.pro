@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     opcje.cpp \
     oknowyniki.cpp \
     dodajwynik.cpp \
-    plansza99.cpp
+    plansza99.cpp \
+    planszasamuraj.cpp
 
 HEADERS  += mainwindow.h \
     generacja.h \
@@ -31,6 +32,7 @@ HEADERS  += mainwindow.h \
     opcje.h \
     oknowyniki.h \
     dodajwynik.h \
-    plansza99.h
+    plansza99.h \
+    planszasamuraj.h
 
 FORMS    += mainwindow.ui

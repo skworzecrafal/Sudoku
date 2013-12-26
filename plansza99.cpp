@@ -14,7 +14,7 @@ Plansza99::Plansza99(QWidget *parent)
         }
     for (int w=0;w<4;w++)
     {
-        if ((w % 3==0)&&((w==0)||(w==3)))
+        if ((w==0)||(w==3))
         {
             linie[w] = new QFrame(pole);
             linie[w]->setGeometry((w)*180+28,65,5,540);
@@ -33,7 +33,7 @@ Plansza99::Plansza99(QWidget *parent)
     }
     for (int w=4;w<8;w++)
     {
-        if ((w % 3==1)&&((w==4)||(w==7)))
+        if ((w==4)||(w==7))
         {
             linie[w] = new QFrame(pole);
             linie[w]->setGeometry(28,(w-4)*180+63,545,5);
@@ -59,6 +59,7 @@ Plansza99::~Plansza99()
     {
         delete linie[i];
     }
+    delete pole;
 }
 
 void Plansza99::close()

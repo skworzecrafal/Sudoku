@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(dodajWynik.gracz,SIGNAL(returnPressed()),this,SLOT(nowyWynik()));
 
     plansza99 = new Plansza99(this);
+    samuraj = new PlanszaSamuraj(this);
+//    samuraj->pole->close();
 }
 
 MainWindow::~MainWindow()
@@ -101,10 +103,10 @@ void MainWindow::wypisz(bool w)
     {
         for(j=0;j<9;j++)
         {
-            if(plansza99->plansza[i][j].wartoscGra)
+            if(*plansza99->plansza[i][j].wartoscGra)
             {
                 plansza99->plansza[i][j].format(!w);
-                plansza99->plansza[i][j].pole->setText(QString::number(plansza99->plansza[i][j].wartoscGra));
+                plansza99->plansza[i][j].pole->setText(QString::number(*plansza99->plansza[i][j].wartoscGra));
             }
             else
             {
@@ -134,7 +136,7 @@ void MainWindow::on_Check_clicked()
     int su,sum[9]={0,0,0,0,0,0,0,0,0};
     for(int w=0;w<9;w++)
         for(int k=0;k<9;k++)
-            if(plansza99->plansza[w][k].wartoscGra)
+            if(*plansza99->plansza[w][k].wartoscGra)
                 wpisane++;
     if(wpisane==81)
     {
@@ -144,8 +146,8 @@ void MainWindow::on_Check_clicked()
             su=0;
             for (int k=0;k<9;k++)
             {
-                su+=plansza99->plansza[w][k].wartoscGra;
-                sum[k]+=plansza99->plansza[w][k].wartoscGra;
+                su+=*plansza99->plansza[w][k].wartoscGra;
+                sum[k]+=*plansza99->plansza[w][k].wartoscGra;
             }
             if(su!=45)
             {
@@ -191,7 +193,7 @@ void MainWindow::on_pomoc_clicked()
     for(w=0;w<9;w++)
         for(k=0;k<9;k++)
         {
-            if(!plansza99->plansza[w][k].wartoscGra)
+            if(!*plansza99->plansza[w][k].wartoscGra)
             {
                 tab1[rozm]=tabl[w][k];
                 rozm++;
@@ -203,7 +205,7 @@ void MainWindow::on_pomoc_clicked()
         wsp = rand() % rozm;
         w = tab1[wsp]/10;
         k = tab1[wsp] % 10;
-        plansza99->plansza[w][k].pole->setText(QString::number(plansza99->plansza[w][k].wartoscZnana));
+        plansza99->plansza[w][k].pole->setText(QString::number(*plansza99->plansza[w][k].wartoscZnana));
         plansza99->plansza[w][k].pole->editingFinished();
     }
 }
@@ -214,7 +216,7 @@ void MainWindow::on_pomoc_2_clicked()
     for(int w=0;w<9;w++)
         for(int k=0;k<9;k++)
         {
-            plansza99->plansza[w][k].pole->setText(QString::number(plansza99->plansza[w][k].wartoscZnana));
+            plansza99->plansza[w][k].pole->setText(QString::number(*plansza99->plansza[w][k].wartoscZnana));
             plansza99->plansza[w][k].pole->editingFinished();
         }
 }

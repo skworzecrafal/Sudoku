@@ -52,7 +52,7 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
             for(j=1;j<10;j++)
             {
                 tabWsp[rozmiarWsp]=tabKwWsp[i-1][j-1]=i*10+j;
-                plansza[i-1][j-1].wartoscGra=plansza[i-1][j-1].wartoscZnana=0;
+                *plansza[i-1][j-1].wartoscGra=*plansza[i-1][j-1].wartoscZnana=0;
                 tabLog[i-1][j-1]=1;
                 rozmiarWsp++;
             }
@@ -69,12 +69,12 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
                     liczZap++;
                     for(w=0;w<9;w++)
                         for(k=0;k<9;k++)
-                            if(plansza[w][k].wartoscGra==cyfra)
-                                plansza[w][k].wartoscGra=plansza[w][k].wartoscZnana=0;
+                            if(*plansza[w][k].wartoscGra==cyfra)
+                                *plansza[w][k].wartoscGra=*plansza[w][k].wartoscZnana=0;
                     rozmiarWsp=i=0;
                     for(w=0;w<9;w++)
                         for(k=0;k<9;k++)
-                            if(!plansza[w][k].wartoscGra)
+                            if(!*plansza[w][k].wartoscGra)
                             {
                                 tabWsp[rozmiarWsp]=tabKwWsp[w][k];
                                 tabLog[w][k]=1;
@@ -87,7 +87,7 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
                 wsp = tabWsp[rand() % rozmiarWsp];
                 w = (wsp/10)-1;
                 k = (wsp % 10)-1;
-                plansza[w][k].wartoscGra=plansza[w][k].wartoscZnana=cyfra;
+                *(plansza[w][k].wartoscGra)=*(plansza[w][k].wartoscZnana)=cyfra;
                 i++;
                 wiersz(w,tabLog);
                 kolumna(k,tabLog);
@@ -111,7 +111,7 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
             rozmiarWsp=i=0;
             for(w=0;w<9;w++)
                 for(k=0;k<9;k++)
-                    if(!plansza[w][k].wartoscGra)
+                    if(!*plansza[w][k].wartoscGra)
                     {
                         tabWsp[rozmiarWsp]=tabKwWsp[w][k];
                         tabLog[w][k]=1;
@@ -147,7 +147,7 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
             for(i=0;i<9;i++)
                 for(j=0;j<9;j++)
                 {
-                    if (plansza[i][j].wartoscGra==plansza[w][k].wartoscGra)
+                    if (*plansza[i][j].wartoscGra==*plansza[w][k].wartoscGra)
                         licznik2++;
                 }
 
@@ -158,11 +158,11 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
                     liczZap = 0;
                     for(i=w-1;i<w+2;i++)
                         for(j=k-1;j<k+2;j++)
-                            if(plansza[i][j].wartoscGra)
+                            if(*plansza[i][j].wartoscGra)
                                 liczZap++;
                     if(liczZap>4)
                     {
-                        plansza[w][k].wartoscGra = 0;
+                        *plansza[w][k].wartoscGra = 0;
                         licznik++;
                         tabLog[w][k]=0;
                     }
@@ -181,7 +181,7 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
                 }
                 else
                 {
-                    plansza[w][k].wartoscGra = 0;
+                    *plansza[w][k].wartoscGra = 0;
                     tabLog[w][k]=0;
                     for (i=indeks;i<rozmiarWsp-1;i++)
                         tabWsp[i]=tabWsp[i+1];
@@ -201,7 +201,7 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
             for(i=0;i<9;i++)
                 for(j=0;j<9;j++)
                 {
-                    if (plansza[i][j].wartoscGra==plansza[w][k].wartoscGra)
+                    if (*plansza[i][j].wartoscGra==*plansza[w][k].wartoscGra)
                         licznik2++;
                 }
             if (licznik2>3)
@@ -210,11 +210,11 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
                     liczZap = 0;
                     for(i=w-1;i<w+2;i++)
                         for(j=k-1;j<k+2;j++)
-                            if(plansza[i][j].wartoscGra)
+                            if(*plansza[i][j].wartoscGra)
                                 liczZap++;
                     if(liczZap>4)
                     {
-                        plansza[w][k].wartoscGra = 0;
+                        *plansza[w][k].wartoscGra = 0;
                         licznik++;
                         tabLog[w][k]=0;
                     }
@@ -235,7 +235,7 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
                 {
                     if (licznik1<25)
                     {
-                        plansza[w][k].wartoscGra = 0;
+                        *plansza[w][k].wartoscGra = 0;
                         tabLog[w][k]=0;
                         licznik1++;
                         licznik++;
@@ -267,7 +267,7 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
             for(i=0;i<9;i++)
                 for(j=0;j<9;j++)
                 {
-                    if (plansza[i][j].wartoscGra==plansza[w][k].wartoscGra)
+                    if (*plansza[i][j].wartoscGra==*plansza[w][k].wartoscGra)
                         licznik2++;
                 }
             if (licznik2>2)
@@ -276,11 +276,11 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
                     liczZap = 0;
                     for(i=w-1;i<w+2;i++)
                         for(j=k-1;j<k+2;j++)
-                            if(plansza[i][j].wartoscGra)
+                            if(*plansza[i][j].wartoscGra)
                                 liczZap++;
                     if(liczZap>3)
                     {
-                        plansza[w][k].wartoscGra = 0;
+                        *plansza[w][k].wartoscGra = 0;
                         licznik++;
                         tabLog[w][k]=0;
                     }
@@ -301,7 +301,7 @@ void Generacja::generowanie(Komorka plansza[9][9], int ile)
                 {
                     if (licznik1<20)
                     {
-                        plansza[w][k].wartoscGra = 0;
+                        *plansza[w][k].wartoscGra = 0;
                         tabLog[w][k]=0;
                         licznik1++;
                         licznik++;

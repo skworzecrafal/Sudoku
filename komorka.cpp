@@ -2,14 +2,25 @@
 
 Komorka::Komorka()
 {
-    wartoscGra = wartoscZnana = 0;
+    wartoscGra = new int();
+    wartoscZnana = new int();
+    *wartoscGra = *wartoscZnana = 0;
     pole = new QLineEdit();
     connect(pole,SIGNAL(editingFinished()),SLOT(ustaw()));
+}
+
+Komorka::Komorka(Komorka &wzor)
+{
+   pole = wzor.pole;
+   wartoscGra = wzor.wartoscGra;
+   wartoscZnana = wzor.wartoscZnana;
 }
 
 Komorka::~Komorka()
 {
     delete pole;
+    delete wartoscGra;
+    delete wartoscZnana;
 }
 
 void Komorka::format(bool write)
@@ -32,10 +43,17 @@ void Komorka::format(bool write)
     }
 }
 
+Komorka &Komorka::operator=(Komorka &K)
+{
+    wartoscGra = (K.wartoscGra);
+    wartoscZnana = (K.wartoscZnana);
+    return *this;
+}
+
 void Komorka::ustaw()
 {
-    wartoscGra=pole->text().toInt();
-    if (!wartoscGra)
+    *wartoscGra=pole->text().toInt();
+    if (!(*wartoscGra))
         pole->setText("");
 }
 

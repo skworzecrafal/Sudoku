@@ -13,11 +13,13 @@ class Komorka: public QObject
 Q_OBJECT
 public:
     Komorka();
+    Komorka(Komorka &wzor);
     ~Komorka();
     QLineEdit *pole;
-    int wartoscGra;
-    int wartoscZnana;
+    int *wartoscGra;
+    int *wartoscZnana;
     void format(bool write);
+    Komorka & operator=(Komorka & K);
 
 private slots:
     void ustaw();
