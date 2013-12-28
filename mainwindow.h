@@ -20,14 +20,15 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow :
+        public QMainWindow,
+        public Generacja
 {
     Q_OBJECT
 
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    Generacja g;
     QTimer* zegar;
     ListaWynikow lista[4];
     Opcje oknoOpcje;
@@ -37,10 +38,14 @@ public:
     PlanszaSamuraj* samuraj;
     int i,j,wpisane,sek,min;
     void wypisz(bool w);
+    void wypiszSam(bool w, Komorkas plansza[5][9][9]);
+    void generuj(int typ);
     bool isClickedNG;
     bool isClickedOpcje;
     bool isClickedTW;
     bool isClickedCheck;
+    bool plansza99Open;
+    bool samurajOpen;
 
 private slots:
 

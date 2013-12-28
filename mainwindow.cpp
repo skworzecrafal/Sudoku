@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     isClickedOpcje = false;
     isClickedTW = false;
     isClickedCheck = false;
+    plansza99Open = false;
+    samurajOpen = false;
     /*
      * utworzenie zagara do gry
      **/
@@ -29,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     lista[0].wczytaj("wyniki99easy.txt");
     lista[1].wczytaj("wyniki99medium.txt");
     lista[2].wczytaj("wyniki99hard.txt");
+    lista[3].wczytaj("wynikisamuraj.txt");
     /*
      *ustawienie akcji do buttonów
      */
@@ -41,7 +44,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     plansza99 = new Plansza99(this);
     samuraj = new PlanszaSamuraj(this);
-//    samuraj->pole->close();
+    samuraj->close();
+
 }
 
 MainWindow::~MainWindow()
@@ -68,8 +72,10 @@ void MainWindow::zegarek()
  */
 void MainWindow::on_nowaGra_clicked()
 {
-    if(isClickedNG)
+    if(plansza99Open)
         plansza99->close();
+    if(samurajOpen)
+        samuraj->close();
     if(isClickedOpcje)
     {
         oknoOpcje.oknoOpcje->close();
@@ -81,21 +87,28 @@ void MainWindow::on_nowaGra_clicked()
         okno.oknoWyniki->close();
         isClickedTW = false;
     }
-
-    plansza99->show();
+    if(oknoOpcje.typ == 1)
+    {
+        plansza99->show();
+        plansza99Open = true;
+    }
+    if(oknoOpcje.typ == 2)
+    {
+        samuraj->show();
+        samurajOpen = true;
+    }
     wpisane = 0;
     ui->Koniec->setText("");
     min=sek=0;
     ui->czas->setText(QString::number(min/10)+QString::number(min%10)+":"+QString::number(sek/10)+QString::number(sek%10));
 
     zegar->start(1000);
-    g.generowanie(plansza99->plansza,oknoOpcje.poziomC);
-    wypisz(true);
+    generuj(oknoOpcje.typ);
     isClickedNG = true;
     isClickedCheck = false;
 }
 /*
- *wypisuje wartości początkowe do planszy
+ *wypisuje wartości początkowe do planszy klasycznej
  */
 void MainWindow::wypisz(bool w)
 {
@@ -105,16 +118,68 @@ void MainWindow::wypisz(bool w)
         {
             if(*plansza99->plansza[i][j].wartoscGra)
             {
-                plansza99->plansza[i][j].format(!w);
+                plansza99->plansza[i][j].format(!w,48);
                 plansza99->plansza[i][j].pole->setText(QString::number(*plansza99->plansza[i][j].wartoscGra));
             }
             else
             {
-                plansza99->plansza[i][j].format(w);
+                plansza99->plansza[i][j].format(w,48);
                 plansza99->plansza[i][j].pole->setText("");
             }
         }
     }
+}
+/*
+ * wypisuje wartości początkowe do planszy samurajskiej
+ */
+void MainWindow::wypiszSam(bool w,Komorkas plansza[5][9][9])
+{
+    for(i=0;i<9;i++)
+    {
+        for(j=0;j<9;j++)
+        {
+            for(int k=0;k<5;k++)
+            {
+                if(*plansza[k][i][j].wartoscGra)
+                {
+                    plansza[k][i][j].format(!w,24);
+                    plansza[k][i][j].pole->setText(QString::number(*plansza[k][i][j].wartoscGra));
+                }
+                else
+                {
+                    plansza[k][i][j].format(w,24);
+                    plansza[k][i][j].pole->setText("");
+                }
+            }
+        }
+    }
+}
+/*
+ *zajmuje się generowniem plansz do gry
+ */
+void MainWindow::generuj(int typ)
+{
+    if(typ==1)
+    {
+        generowanie(plansza99->plansza,oknoOpcje.poziomC);
+        wypisz(true);
+    }
+    if(typ==2)
+    {
+        samuraj->zerujPola();
+        generowanie(samuraj->tab,4);
+        for(i=0;i<9;i++)
+            for(j=0;j<9;j++)
+                *samuraj->tab[4][i][j].backupWart = *samuraj->tab[4][i][j].wartoscZnana;
+        for(int nr=0;nr<4;nr++)
+        {
+        generowanie(samuraj->tab,nr);
+        }
+
+        wypiszSam(true,samuraj->tab);
+
+    }
+
 }
 /*
  *otwiera okno opcji
@@ -175,7 +240,10 @@ void MainWindow::on_Check_clicked()
 
         }
         else
+        {
             ui->Koniec->setText("Może innym razem ;)");
+            isClickedCheck = true;
+        }
     }
 }
 
@@ -228,6 +296,7 @@ void MainWindow::on_wyjscie_clicked()
     lista[0].zapisz("wyniki99easy.txt");
     lista[1].zapisz("wyniki99medium.txt");
     lista[2].zapisz("wyniki99hard.txt");
+    lista[3].zapisz("wynikisamuraj.txt");
     if(isClickedNG)
         plansza99->close();
     if(isClickedOpcje)
@@ -296,7 +365,7 @@ void MainWindow::on_tabWyn_clicked()
  */
 void MainWindow::resetWynikow()
 {
-    for(int i=0;i<3;i++)
+    for(int i=0;i<4;i++)
         lista[i].~ListaWynikow();
 }
 /*

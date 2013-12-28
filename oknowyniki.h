@@ -6,8 +6,11 @@
 #include <QLabel>
 #include "listawynikow.h"
 #include "wynik.h"
+#include "styltekstu.h"
 
-class OknoWyniki: public QMainWindow
+class OknoWyniki:
+        public QMainWindow,
+        public StylTekstu
 {
 public:
     OknoWyniki();

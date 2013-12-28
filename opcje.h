@@ -3,8 +3,11 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLabel>
+#include "styltekstu.h"
 
-class Opcje: public QMainWindow
+class Opcje:
+        public QMainWindow,
+        public StylTekstu
 {
     Q_OBJECT
 public:
@@ -15,9 +18,14 @@ public:
     QPushButton* hard;
     QPushButton* back;
     QPushButton* reset;
+    QPushButton* klasyczny;
+    QPushButton* samurajskie;
     QLabel* opcje1;
     QLabel* poziom;
+    QLabel* etykietaTyp;
+
     int poziomC;
+    int typ;
 
 private slots:
     void easy_clicked();
@@ -25,6 +33,10 @@ private slots:
     void medium_clicked();
 
     void hard_clicked();
+
+    void klasyk_clicked();
+
+    void samuraj_clicked();
 };
 
 #endif // OPCJE_H

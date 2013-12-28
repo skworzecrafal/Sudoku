@@ -7,38 +7,38 @@ PlanszaSamuraj::PlanszaSamuraj(QWidget *parent)
     for(int i=0;i<9;i++)
         for(int j=0;j<9;j++)
         {
-            lg[i][j].pole->setParent(pole);
-            lg[i][j].pole->setGeometry(j*30+15,i*30+10,30,30);
-            rg[i][j].pole->setParent(pole);
-            rg[i][j].pole->setGeometry(j*30+375,i*30+10,30,30);
-            ld[i][j].pole->setParent(pole);
-            ld[i][j].pole->setGeometry(j*30+15,i*30+370,30,30);
-            rd[i][j].pole->setParent(pole);
-            rd[i][j].pole->setGeometry(j*30+375,i*30+370,30,30);
+            tab[0][i][j].pole->setParent(pole);
+            tab[0][i][j].pole->setGeometry(j*30+15,i*30+10,30,30);
+            tab[1][i][j].pole->setParent(pole);
+            tab[1][i][j].pole->setGeometry(j*30+375,i*30+10,30,30);
+            tab[2][i][j].pole->setParent(pole);
+            tab[2][i][j].pole->setGeometry(j*30+15,i*30+370,30,30);
+            tab[3][i][j].pole->setParent(pole);
+            tab[3][i][j].pole->setGeometry(j*30+375,i*30+370,30,30);
         }
     for(int i=0;i<9;i++)
         for(int j=0;j<9;j++)
         {
             if((i<3)&&(j<3))
             {
-                sr[i][j]=lg[i+6][j+6];
+                tab[4][i][j]=tab[0][i+6][j+6];
             }
             else if((i<3)&&(j>5))
             {
-                sr[i][j]=rg[i+6][j-6];
+                tab[4][i][j]=tab[1][i+6][j-6];
             }
             else if((i>5)&&(j<3))
             {
-                sr[i][j]=ld[i-6][j+6];
+                tab[4][i][j]=tab[2][i-6][j+6];
             }
             else if((i>5)&&(j>5))
             {
-                sr[i][j]= rd[i-6][j-6];
+                tab[4][i][j]= tab[3][i-6][j-6];
             }
             else
             {
-                sr[i][j].pole->setParent(pole);
-                sr[i][j].pole->setGeometry(j*30+195,i*30+190,30,30);
+                tab[4][i][j].pole->setParent(pole);
+                tab[4][i][j].pole->setGeometry(j*30+195,i*30+190,30,30);
             }
         }
     int x,yv,yh,modul;
@@ -102,4 +102,22 @@ PlanszaSamuraj::PlanszaSamuraj(QWidget *parent)
             linie[i+20]->setLineWidth(2);
         }
     }
+}
+
+void PlanszaSamuraj::zerujPola()
+{
+    for(int i=0;i<9;i++)
+        for(int j=0;j<9;j++)
+            for(int k=0;k<5;k++)
+                tab[k][i][j].zeruj();
+}
+void PlanszaSamuraj::close()
+{
+    pole->close();
+}
+
+void PlanszaSamuraj::show()
+{
+    pole->show();
+
 }

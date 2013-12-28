@@ -1,24 +1,25 @@
 #ifndef KOMORKA_H
 #define KOMORKA_H
 
-#include <QLineEdit>
 #include <QObject>
+#include "styltekstu.h"
 
 
 
 
-class Komorka: public QObject
+class Komorka:
+        public QObject,
+        public StylTekstu
 
 {
 Q_OBJECT
 public:
     Komorka();
-    Komorka(Komorka &wzor);
     ~Komorka();
     QLineEdit *pole;
     int *wartoscGra;
     int *wartoscZnana;
-    void format(bool write);
+    void format(bool write,int rozm);
     Komorka & operator=(Komorka & K);
 
 private slots:

@@ -29,14 +29,14 @@ DodajWynik::~DodajWynik()
     delete okno;
 }
 
-void DodajWynik::dodaj(ListaWynikow lista[], int poziom, int min, int sek)
+void DodajWynik::dodaj(ListaWynikow lista[], int karta, int min, int sek)
 {
     Wynik* wynik;
     wynik = new Wynik();
     wynik->setImie(gracz->text());
     wynik->setMinuty(min);
     wynik->setSekundy(sek);
-    lista[poziom - 1].dodaj(wynik);
+    lista[karta - 1].dodaj(wynik);
 }
 
 

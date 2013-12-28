@@ -9,12 +9,6 @@ Komorka::Komorka()
     connect(pole,SIGNAL(editingFinished()),SLOT(ustaw()));
 }
 
-Komorka::Komorka(Komorka &wzor)
-{
-   pole = wzor.pole;
-   wartoscGra = wzor.wartoscGra;
-   wartoscZnana = wzor.wartoscZnana;
-}
 
 Komorka::~Komorka()
 {
@@ -23,20 +17,22 @@ Komorka::~Komorka()
     delete wartoscZnana;
 }
 
-void Komorka::format(bool write)
+void Komorka::format(bool write, int rozm)
 {
     if(write)
     {
-        pole->setStyleSheet("font: 24pt Comic Sans MS;"
-                           "color: rgb(0, 180, 0)");
+        setStyl("Comic Sans MS",QPalette::Text,Qt::blue,rozm);
+        pole->setPalette(paleta);
+        pole->setFont(czcionka);
         pole->setReadOnly(false);
         pole->setAlignment(Qt::AlignCenter);
         pole->setMaxLength(1);
     }
     else
     {
-        pole->setStyleSheet("font: 75 24pt Comic Sans MS;"
-                           "color: rgb(0, 0, 0)");
+        setStyl("Comic Sans MS",QPalette::Text,Qt::black,rozm);
+        pole->setPalette(paleta);
+        pole->setFont(czcionka);
         pole->setReadOnly(true);
         pole->setAlignment(Qt::AlignCenter);
         pole->setMaxLength(1);

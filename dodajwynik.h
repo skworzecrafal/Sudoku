@@ -17,7 +17,7 @@ public:
     QLineEdit* gracz;
     QPushButton* ok;
     QLabel* etykieta;
-    void dodaj(ListaWynikow lista[],int poziom,int min,int sek);
+    void dodaj(ListaWynikow lista[],int karta,int min,int sek);
 };
 
 #endif // DODAJWYNIK_H

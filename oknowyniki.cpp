@@ -8,20 +8,23 @@ OknoWyniki::OknoWyniki()
     oknoWyniki->addTab(poziom[0] = new QWidget(),"Łatwy");
     oknoWyniki->addTab(poziom[1] = new QWidget(),"Średni");
     oknoWyniki->addTab(poziom[2] = new QWidget(),"Trudny");
+    oknoWyniki->addTab(poziom[3] = new QWidget(),"Samurajskie");
 }
 
 void OknoWyniki::wypisz(ListaWynikow lista[])
 {
     Wynik* indeks;
     int j,min,sek;
-    for(int i=0;i<3;i++)
+    for(int i=0;i<4;i++)
     {
         j = 0;
         if(!lista[i].liczba)
         {
             info[i][0] = new QLabel(poziom[i]);
             info[i][0]->setAlignment(Qt::AlignCenter);
-            info[i][0]->setStyleSheet("font: 75 24pt MS Shell Dlg 2;");
+            setStyl("MS Shell",QPalette::Text,Qt::black,36);
+            info[i][0]->setPalette(paleta);
+            info[i][0]->setFont(czcionka);
             info[i][0]->setText("Brak");
             info[i][0]->setGeometry(50,50,150,50);
             liczba[i] = 0;
@@ -32,8 +35,11 @@ void OknoWyniki::wypisz(ListaWynikow lista[])
             info[i][1] = new QLabel(poziom[i]);
             info[i][0]->setAlignment(Qt::AlignCenter);
             info[i][1]->setAlignment(Qt::AlignCenter);
-            info[i][0]->setStyleSheet("font: 75 11pt MS Shell Dlg 2;");
-            info[i][1]->setStyleSheet("font: 75 11pt MS Shell Dlg 2;");
+            setStyl("MS Shell",QPalette::Text,Qt::black,20);
+            info[i][0]->setPalette(paleta);
+            info[i][0]->setFont(czcionka);
+            info[i][1]->setPalette(paleta);
+            info[i][1]->setFont(czcionka);
             info[i][0]->setText("Gracz");
             info[i][1]->setText("Czas");
             info[i][0]->setGeometry(45,5,100,20);
@@ -64,7 +70,7 @@ void OknoWyniki::wypisz(ListaWynikow lista[])
 
 void OknoWyniki::zamknij()
 {
-    for(int i=0;i<3;i++)
+    for(int i=0;i<4;i++)
     {
         if(!liczba[i])
         {
