@@ -1,10 +1,11 @@
 #include "oknowyniki.h"
 
-OknoWyniki::OknoWyniki()
+OknoWyniki::OknoWyniki():QMainWindow()
 {
-    oknoWyniki = new QTabWidget();
+    oknoWyniki = new QTabWidget(this);
     oknoWyniki->setWindowTitle("Tablica wyników");
     oknoWyniki->setFixedSize(250,260);
+    setFixedSize(250,260);
     oknoWyniki->addTab(poziom[0] = new QWidget(),"Łatwy");
     oknoWyniki->addTab(poziom[1] = new QWidget(),"Średni");
     oknoWyniki->addTab(poziom[2] = new QWidget(),"Trudny");

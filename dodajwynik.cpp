@@ -1,21 +1,20 @@
 #include "dodajwynik.h"
 
-DodajWynik::DodajWynik()
+DodajWynik::DodajWynik():QMainWindow()
 {
-    okno = new QWidget();
-    okno->setFixedSize(150,150);
-    okno->setWindowTitle(" ");
-    etykieta = new QLabel(okno);
+    setFixedSize(150,150);
+    setWindowTitle(" ");
+    etykieta = new QLabel(this);
     etykieta->setAlignment(Qt::AlignCenter);
     etykieta->setText("Podaj swoje imię:");
     etykieta->setGeometry(5,10,140,30);
     etykieta->setStyleSheet("font: 75 12pt MS Shell Dlg 2;");
-    gracz = new QLineEdit(okno);
+    gracz = new QLineEdit(this);
     gracz->setGeometry(20,50,110,30);
     gracz->setAlignment(Qt::AlignCenter);
     gracz->setMaxLength(20);
     gracz->setText("Gracz");
-    ok = new QPushButton(okno);
+    ok = new QPushButton(this);
     ok->setGeometry(45,105,60,30);
     ok->setText("Potwierdź");
     gracz->selectAll();
@@ -26,7 +25,6 @@ DodajWynik::~DodajWynik()
     delete etykieta;
     delete gracz;
     delete ok;
-    delete okno;
 }
 
 void DodajWynik::dodaj(ListaWynikow lista[], int karta, int min, int sek)

@@ -78,13 +78,13 @@ void MainWindow::on_nowaGra_clicked()
         samuraj->close();
     if(isClickedOpcje)
     {
-        oknoOpcje.oknoOpcje->close();
+        oknoOpcje.close();
         isClickedOpcje = false;
     }
     if(isClickedTW)
     {
         okno.zamknij();
-        okno.oknoWyniki->close();
+        okno.close();
         isClickedTW = false;
     }
     if(oknoOpcje.typ == 1)
@@ -187,7 +187,7 @@ void MainWindow::generuj(int typ)
 
 void MainWindow::on_opcje_clicked()
 {
-    oknoOpcje.oknoOpcje->show();
+    oknoOpcje.show();
     isClickedOpcje = true;
 }
 /*
@@ -232,7 +232,7 @@ void MainWindow::on_Check_clicked()
             if(!isClickedCheck)
             {
 
-                dodajWynik.okno->show();
+                dodajWynik.show();
                 dodajWynik.gracz->setFocus();
                 dodajWynik.gracz->selectAll();
             }
@@ -297,16 +297,18 @@ void MainWindow::on_wyjscie_clicked()
     lista[1].zapisz("wyniki99medium.txt");
     lista[2].zapisz("wyniki99hard.txt");
     lista[3].zapisz("wynikisamuraj.txt");
-    if(isClickedNG)
+    if(plansza99Open)
         plansza99->close();
+    if(samurajOpen)
+        samuraj->close();
     if(isClickedOpcje)
     {
-        oknoOpcje.oknoOpcje->close();
+        oknoOpcje.close();
     }
     if(isClickedTW)
     {
         okno.zamknij();
-        okno.oknoWyniki->close();
+        okno.close();
     }
 }
 /*
@@ -316,11 +318,10 @@ void MainWindow::easy_clicked()
 {
     min = sek = 0;
     zegar->stop();
-    if(isClickedNG)
-    {
+    if(plansza99Open)
         plansza99->close();
-        isClickedNG = false;
-    }
+    if(samurajOpen)
+        samuraj->close();
 }
 /*
  *poziom średni
@@ -329,11 +330,10 @@ void MainWindow::medium_clicked()
 {
     min = sek = 0;
     zegar->stop();
-    if(isClickedNG)
-    {
+    if(plansza99Open)
         plansza99->close();
-        isClickedNG = false;
-    }
+    if(samurajOpen)
+        samuraj->close();
 }
 /*
  *poziom trudny
@@ -342,11 +342,10 @@ void MainWindow::hard_clicked()
 {
     min = sek = 0;
     zegar->stop();
-    if(isClickedNG)
-    {
+    if(plansza99Open)
         plansza99->close();
-        isClickedNG = false;
-    }
+    if(samurajOpen)
+        samuraj->close();
 }
 /*
  *otwarcie okna z listą wyników
@@ -357,7 +356,7 @@ void MainWindow::on_tabWyn_clicked()
         okno.zamknij();
     okno.oknoWyniki->setCurrentIndex(0);
     okno.wypisz(lista);
-    okno.oknoWyniki->show();
+    okno.show();
     isClickedTW = true;
 }
 /*
@@ -374,5 +373,5 @@ void MainWindow::resetWynikow()
 void MainWindow::nowyWynik()
 {
     dodajWynik.dodaj(lista,oknoOpcje.poziomC,min,sek);
-    dodajWynik.okno->close();
+    dodajWynik.close();
 }

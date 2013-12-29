@@ -12,7 +12,6 @@ class Opcje:
     Q_OBJECT
 public:
     Opcje();
-    QWidget* oknoOpcje;
     QPushButton* easy;
     QPushButton* medium;
     QPushButton* hard;

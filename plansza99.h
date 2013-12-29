@@ -5,17 +5,14 @@
 #include <QWidget>
 
 
-class Plansza99
+class Plansza99: public QWidget
 {
 public:
     Plansza99(QWidget *parent);
     ~Plansza99();
     Komorka plansza[9][9];
     QFrame* linie[8];
-    QWidget* pole;
 
-    void close();
-    void show();
 };
 
 #endif // PLANSZA99_H

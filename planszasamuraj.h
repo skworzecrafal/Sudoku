@@ -8,12 +8,14 @@ class PlanszaSamuraj
 {
 public:
     PlanszaSamuraj(QWidget *parent);
+    ~PlanszaSamuraj();
     Komorkas tab[5][9][9];
     QFrame* linie[40];
     QWidget* pole;
     void zerujPola();
     void close();
     void show();
+
 };
 
 #endif // PLANSZASAMURAJ_H

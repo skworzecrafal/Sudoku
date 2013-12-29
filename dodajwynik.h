@@ -13,7 +13,6 @@ class DodajWynik: public QMainWindow
 public:
     DodajWynik();
     ~DodajWynik();
-    QWidget* okno;
     QLineEdit* gracz;
     QPushButton* ok;
     QLabel* etykieta;

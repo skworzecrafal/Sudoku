@@ -111,6 +111,12 @@ void PlanszaSamuraj::zerujPola()
             for(int k=0;k<5;k++)
                 tab[k][i][j].zeruj();
 }
+
+PlanszaSamuraj::~PlanszaSamuraj()
+{
+    for(int i=0;i<9;i++)
+        delete linie[i];
+}
 void PlanszaSamuraj::close()
 {
     pole->close();
