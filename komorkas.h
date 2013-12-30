@@ -5,7 +5,6 @@ class Komorkas :public Komorka
 {
 public:
     Komorkas();
-    ~Komorkas();
     int *backupWart;
     Komorkas & operator=(Komorkas & K);
     void zeruj();

@@ -1,5 +1,5 @@
 #include "listawynikow.h"
-#include <fstream>
+
 
 ListaWynikow::ListaWynikow()
 {

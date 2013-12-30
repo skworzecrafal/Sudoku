@@ -4,17 +4,15 @@
 #include <QFrame>
 #include <QWidget>
 
-class PlanszaSamuraj
+class PlanszaSamuraj:public QWidget
 {
 public:
-    PlanszaSamuraj(QWidget *parent);
+    PlanszaSamuraj(QWidget *parent=0);
     ~PlanszaSamuraj();
     Komorkas tab[5][9][9];
     QFrame* linie[40];
     QWidget* pole;
     void zerujPola();
-    void close();
-    void show();
 
 };
 

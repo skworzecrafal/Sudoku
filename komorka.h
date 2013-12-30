@@ -15,7 +15,7 @@ class Komorka:
 Q_OBJECT
 public:
     Komorka();
-    ~Komorka();
+    virtual ~Komorka();
     QLineEdit *pole;
     int *wartoscGra;
     int *wartoscZnana;

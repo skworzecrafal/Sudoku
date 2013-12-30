@@ -9,13 +9,11 @@ Komorka::Komorka()
     connect(pole,SIGNAL(editingFinished()),SLOT(ustaw()));
 }
 
-
 Komorka::~Komorka()
 {
     delete pole;
-    delete wartoscGra;
-    delete wartoscZnana;
 }
+
 
 void Komorka::format(bool write, int rozm)
 {

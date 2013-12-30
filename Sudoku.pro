@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     plansza99.cpp \
     planszasamuraj.cpp \
     komorkas.cpp \
-    styltekstu.cpp
+    styltekstu.cpp \
+    gra.cpp
 
 HEADERS  += mainwindow.h \
     generacja.h \
@@ -37,6 +38,7 @@ HEADERS  += mainwindow.h \
     plansza99.h \
     planszasamuraj.h \
     komorkas.h \
-    styltekstu.h
+    styltekstu.h \
+    gra.h
 
-FORMS    += mainwindow.ui
+FORMS    +=

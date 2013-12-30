@@ -1,6 +1,7 @@
 #ifndef LISTAWYNIKOW_H
 #define LISTAWYNIKOW_H
 #include "wynik.h"
+#include <fstream>
 
 class ListaWynikow
 {

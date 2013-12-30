@@ -5,10 +5,6 @@ Komorkas::Komorkas()
     backupWart = new int;
 }
 
-Komorkas::~Komorkas()
-{
-    delete backupWart;
-}
 
 Komorkas &Komorkas::operator=(Komorkas &K)
 {

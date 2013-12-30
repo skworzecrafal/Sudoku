@@ -1,23 +1,24 @@
 #include "planszasamuraj.h"
 
-PlanszaSamuraj::PlanszaSamuraj(QWidget *parent)
+PlanszaSamuraj::PlanszaSamuraj(QWidget *parent):QWidget(parent)
 {
-    pole = new QWidget(parent);
-    pole->setGeometry(30,70,660,650);
-    for(int i=0;i<9;i++)
-        for(int j=0;j<9;j++)
+    int i,j;
+    setGeometry(30,70,660,650);
+    close();
+    for( i=0;i<9;i++)
+        for( j=0;j<9;j++)
         {
-            tab[0][i][j].pole->setParent(pole);
+            tab[0][i][j].pole->setParent(this);
             tab[0][i][j].pole->setGeometry(j*30+15,i*30+10,30,30);
-            tab[1][i][j].pole->setParent(pole);
+            tab[1][i][j].pole->setParent(this);
             tab[1][i][j].pole->setGeometry(j*30+375,i*30+10,30,30);
-            tab[2][i][j].pole->setParent(pole);
+            tab[2][i][j].pole->setParent(this);
             tab[2][i][j].pole->setGeometry(j*30+15,i*30+370,30,30);
-            tab[3][i][j].pole->setParent(pole);
+            tab[3][i][j].pole->setParent(this);
             tab[3][i][j].pole->setGeometry(j*30+375,i*30+370,30,30);
         }
-    for(int i=0;i<9;i++)
-        for(int j=0;j<9;j++)
+    for( i=0;i<9;i++)
+        for( j=0;j<9;j++)
         {
             if((i<3)&&(j<3))
             {
@@ -37,7 +38,7 @@ PlanszaSamuraj::PlanszaSamuraj(QWidget *parent)
             }
             else
             {
-                tab[4][i][j].pole->setParent(pole);
+                tab[4][i][j].pole->setParent(this);
                 tab[4][i][j].pole->setGeometry(j*30+195,i*30+190,30,30);
             }
         }
@@ -77,12 +78,12 @@ PlanszaSamuraj::PlanszaSamuraj(QWidget *parent)
             modul = i % 3;
         if (i%3==modul)
         {
-            linie[i] = new QFrame(pole);
+            linie[i] = new QFrame(this);
             linie[i]->setGeometry((i-i/4*4)*90+x,yv,5,270);
             linie[i]->setFrameShape(QFrame::VLine);
             linie[i]->setFrameShadow(QFrame::Plain);
             linie[i]->setLineWidth(3);
-            linie[i+20] = new QFrame(pole);
+            linie[i+20] = new QFrame(this);
             linie[i+20]->setGeometry(x+1,(i-i/4*4)*90+yh,273,5);
             linie[i+20]->setFrameShape(QFrame::HLine);
             linie[i+20]->setFrameShadow(QFrame::Plain);
@@ -90,12 +91,12 @@ PlanszaSamuraj::PlanszaSamuraj(QWidget *parent)
         }
         else
         {
-            linie[i] = new QFrame(pole);
+            linie[i] = new QFrame(this);
             linie[i]->setGeometry((i-i/4*4)*90+x,yv,5,270);
             linie[i]->setFrameShape(QFrame::VLine);
             linie[i]->setFrameShadow(QFrame::Plain);
             linie[i]->setLineWidth(2);
-            linie[i+20] = new QFrame(pole);
+            linie[i+20] = new QFrame(this);
             linie[i+20]->setGeometry(x+1,(i-i/4*4)*90+yh,273,5);
             linie[i+20]->setFrameShape(QFrame::HLine);
             linie[i+20]->setFrameShadow(QFrame::Plain);
@@ -114,16 +115,28 @@ void PlanszaSamuraj::zerujPola()
 
 PlanszaSamuraj::~PlanszaSamuraj()
 {
-    for(int i=0;i<9;i++)
+    int i,j,k;
+    for( i=0;i<9;i++)
         delete linie[i];
-}
-void PlanszaSamuraj::close()
-{
-    pole->close();
-}
-
-void PlanszaSamuraj::show()
-{
-    pole->show();
-
+    for( i=0;i<9;i++)
+        for( j=0;j<9;j++)
+            for(k=0;k<4;k++)
+            {
+                delete tab[k][i][j].wartoscGra;
+                delete tab[k][i][j].backupWart;
+                delete tab[k][i][j].wartoscZnana;
+            }
+    for( i=0;i<9;i++)
+        for( j=0;j<9;j++)
+        {
+            if((i<3)&&(j<3)){continue;}
+            if((i<3)&&(j>5)){continue;}
+            if((i>5)&&(j<3)){continue;}
+            if((i>5)&&(j>5)){continue;}
+            {
+                delete tab[4][i][j].wartoscGra;
+                delete tab[4][i][j].backupWart;
+                delete tab[4][i][j].wartoscZnana;
+            }
+        }
 }

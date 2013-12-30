@@ -62,14 +62,6 @@ Opcje::Opcje():QMainWindow()
     reset = new QPushButton(this);
     reset->setGeometry(390,430,75,30);
     reset->setText("Reset");
-
-    if(typ == 1)
-    {
-        easy->setEnabled(true);
-        medium->setEnabled(true);
-        hard->setEnabled(true);
-        etykietaTyp->setText("Wybierz typ gry: \t Klasyczne");
-    }
 }
 
 void Opcje::easy_clicked()

@@ -17,14 +17,18 @@ public:
     QPushButton* hard;
     QPushButton* back;
     QPushButton* reset;
-    QPushButton* klasyczny;
-    QPushButton* samurajskie;
-    QLabel* opcje1;
-    QLabel* poziom;
     QLabel* etykietaTyp;
+    QLabel* poziom;
 
     int poziomC;
     int typ;
+
+private:
+
+    QPushButton* klasyczny;
+    QPushButton* samurajskie;
+    QLabel* opcje1;
+
 
 private slots:
     void easy_clicked();

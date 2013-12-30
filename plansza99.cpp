@@ -53,9 +53,15 @@ Plansza99::Plansza99(QWidget *parent):QWidget(parent)
 
 Plansza99::~Plansza99()
 {
-    int i;
+    int i,j;
     for(i=0;i<8;i++)
     {
         delete linie[i];
     }
+    for(i=0;i<9;i++)
+        for(j=0;j<9;j++)
+        {
+            delete plansza[i][j].wartoscGra;
+            delete plansza[i][j].wartoscZnana;
+        }
 }
