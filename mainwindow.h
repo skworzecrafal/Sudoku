@@ -3,13 +3,11 @@
 
 #include <QMainWindow>
 #include <QPushButton>
-#include "styltekstu.h"
 #include "gra.h"
 
 
 class MainWindow :
         public QMainWindow,
-        public StylTekstu,
         public Gra
 {
     Q_OBJECT
@@ -28,9 +26,8 @@ private:
      * 4-wyjscie
      * 5-sprawdzenie rozwiazania
      * 6-pojedyncza podpowiedz
-     * 7-szybkie rozwiazanie
      */
-    QPushButton* przycisk[8];
+    QPushButton* przycisk[7];
     QLabel* naglowek;
     QLabel* zegarWyswietlacz;
     QLabel* wynikGry;
@@ -45,23 +42,17 @@ private slots:
 
     void Check_clicked();
 
-//    void on_pomoc_clicked();
-
-//    void on_pomoc_2_clicked();
+    void wskazowka();
 
     void wyjscie_clicked();
 
-//    void easy_clicked();
-
-//    void medium_clicked();
-
-//    void hard_clicked();
-
     void wyniki_clicked();
 
-//    void resetWynikow();
+    void reset_clicked();
 
     void nowyWynik();
+
+    void pomoc_clicked();
 
 };
 

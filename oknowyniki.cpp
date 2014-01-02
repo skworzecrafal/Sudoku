@@ -2,6 +2,7 @@
 
 OknoWyniki::OknoWyniki():QMainWindow()
 {
+    int i,j,k;
     oknoWyniki = new QTabWidget(this);
     oknoWyniki->setWindowTitle("Tablica wyników");
     oknoWyniki->setFixedSize(250,260);
@@ -10,6 +11,19 @@ OknoWyniki::OknoWyniki():QMainWindow()
     oknoWyniki->addTab(poziom[1] = new QWidget(),"Średni");
     oknoWyniki->addTab(poziom[2] = new QWidget(),"Trudny");
     oknoWyniki->addTab(poziom[3] = new QWidget(),"Samurajskie");
+
+    for(i=0;i<4;i++)
+    {
+        for(j=0;j<2;j++)
+        {
+            info[i][j] = new QLabel(poziom[i]);
+        }
+        for(j=0;j<10;j++)
+            for(k=0;k<3;k++)
+            {
+                label[i][j][k] = new QLabel(poziom[i]);
+            }
+    }
 }
 
 void OknoWyniki::wypisz(ListaWynikow lista[])
@@ -21,7 +35,6 @@ void OknoWyniki::wypisz(ListaWynikow lista[])
         j = 0;
         if(!lista[i].liczba)
         {
-            info[i][0] = new QLabel(poziom[i]);
             info[i][0]->setAlignment(Qt::AlignCenter);
             setStyl("MS Shell",QPalette::Text,Qt::black,36);
             info[i][0]->setPalette(paleta);
@@ -32,8 +45,6 @@ void OknoWyniki::wypisz(ListaWynikow lista[])
         }
         else
         {
-            info[i][0] = new QLabel(poziom[i]);
-            info[i][1] = new QLabel(poziom[i]);
             info[i][0]->setAlignment(Qt::AlignCenter);
             info[i][1]->setAlignment(Qt::AlignCenter);
             setStyl("MS Shell",QPalette::Text,Qt::black,20);
@@ -50,7 +61,6 @@ void OknoWyniki::wypisz(ListaWynikow lista[])
             {
                 for(int k=0;k<3;k++)
                 {
-                    label[i][j][k] = new QLabel(poziom[i]);
                     label[i][j][k]->setAlignment(Qt::AlignCenter);
                 }
                 label[i][j][0]->setGeometry(30,30+(j*20),15,20);
@@ -71,32 +81,37 @@ void OknoWyniki::wypisz(ListaWynikow lista[])
 
 void OknoWyniki::zamknij()
 {
-    for(int i=0;i<4;i++)
+    int i,j,k;
+    for(i=0;i<4;i++)
     {
-        if(!liczba[i])
+        for(j=0;j<2;j++)
         {
-            info[i][0]->close();
-            delete info[i][0];
+            info[i][j]->setText("");
         }
-        else
-        {
-            info[i][0]->close();
-            info[i][1]->close();
-            delete info[i][0];
-            delete info[i][1];
-            for(int j=0;j<liczba[i];j++)
+        for(j=0;j<10;j++)
+            for(k=0;k<3;k++)
             {
-                for(int k=0;k<3;k++)
-                {
-                    label[i][j][k]->close();
-                    delete label[i][j][k];
-                }
+                label[i][j][k]->setText("");
             }
-        }
     }
 }
 
 OknoWyniki::~OknoWyniki()
 {
+    int i,j,k;
+    for(i=0;i<4;i++)
+    {
+        for(j=0;j<2;j++)
+        {
+            delete info[i][j];
+        }
+        for(j=0;j<10;j++)
+            for(k=0;k<3;k++)
+            {
+                delete label[i][j][k];
+            }
+    }
+    for(i=0;i<4;i++)
+        delete poziom[i];
     delete oknoWyniki;
 }

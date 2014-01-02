@@ -11,6 +11,7 @@ Komorkas &Komorkas::operator=(Komorkas &K)
     backupWart = K.backupWart;
     wartoscGra = K.wartoscGra;
     wartoscZnana = K.wartoscZnana;
+    pole = K.pole;
     return *this;
 }
 

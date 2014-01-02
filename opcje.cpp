@@ -7,25 +7,55 @@ Opcje::Opcje():QMainWindow()
     setFixedSize(470,500);
     close();
     setWindowTitle("Opcje");
+    wczytajConf();
+
+    setStyl("Comic Sans MS",QPalette::ButtonText,Qt::black,20);
 
     easy = new QPushButton(this);
     easy->setGeometry(5,55,150,50);
     easy->setText("Łatwy");
+    easy->setPalette(paleta);
+    easy->setFont(czcionka);
 
     medium = new QPushButton(this);
     medium->setGeometry(160,55,150,50);
     medium->setText("Średni");
+    medium->setPalette(paleta);
+    medium->setFont(czcionka);
 
     hard = new QPushButton(this);
     hard->setGeometry(315,55,150,50);
     hard->setText("Trudny");
+    hard->setPalette(paleta);
+    hard->setFont(czcionka);
 
+    klasyczny = new QPushButton(this);
+    klasyczny->setGeometry(5,205,225,50);
+    klasyczny->setText("Klasyczne");
+    klasyczny->setPalette(paleta);
+    klasyczny->setFont(czcionka);
+
+    samurajskie = new QPushButton(this);
+    samurajskie->setGeometry(235,205,225,50);
+    samurajskie->setText("Samurajskie");
+    samurajskie->setPalette(paleta);
+    samurajskie->setFont(czcionka);
+
+    reset = new QPushButton(this);
+    reset->setGeometry(135,355,200,50);
+    reset->setText("Reset");
+    reset->setPalette(paleta);
+    reset->setFont(czcionka);
+
+    setStyl("Comic Sans MS",QPalette::ButtonText,Qt::black,15);
     back = new QPushButton(this);
     back->setGeometry(390,465,75,30);
     back->setText("Wstecz");
+    back->setPalette(paleta);
+    back->setFont(czcionka);
     connect(back,SIGNAL(clicked()),this,SLOT(close()));
 
-    setStyl("MS Shell",QPalette::Text,Qt::black,20);
+    setStyl("Comic Sans MS",QPalette::Text,Qt::black,20);
 
     opcje1 = new QLabel(this);
     opcje1->setText("Wybierz poziom trudności:");
@@ -35,7 +65,6 @@ Opcje::Opcje():QMainWindow()
 
     poziom = new QLabel(this);
     poziom->setGeometry(355,5,115,45);
-    poziom->setText("Łatwy");
     poziom->setPalette(paleta);
     poziom->setFont(czcionka);
 
@@ -44,13 +73,12 @@ Opcje::Opcje():QMainWindow()
     etykietaTyp->setPalette(paleta);
     etykietaTyp->setFont(czcionka);
 
-    klasyczny = new QPushButton(this);
-    klasyczny->setGeometry(5,205,225,50);
-    klasyczny->setText("Klasyczne");
+    resetW = new QLabel(this);
+    resetW->setGeometry(5,305,460,45);
+    resetW->setPalette(paleta);
+    resetW->setFont(czcionka);
+    resetW->setText("Aby zresetować listę wyników wciśnij:");
 
-    samurajskie = new QPushButton(this);
-    samurajskie->setGeometry(235,205,225,50);
-    samurajskie->setText("Samurajskie");
 
     connect(back,SIGNAL(clicked()),this,SLOT(close()));
     connect(easy,SIGNAL(clicked()),this,SLOT(easy_clicked()));
@@ -59,9 +87,52 @@ Opcje::Opcje():QMainWindow()
     connect(klasyczny,SIGNAL(clicked()),this,SLOT(klasyk_clicked()));
     connect(samurajskie,SIGNAL(clicked()),this,SLOT(samuraj_clicked()));
 
-    reset = new QPushButton(this);
-    reset->setGeometry(390,430,75,30);
-    reset->setText("Reset");
+    if(poziomC == 1)
+        poziom->setText("Łatwy");
+    if(poziomC == 2)
+        poziom->setText("Średni");
+    if(poziomC == 3)
+        poziom->setText("Trudny");
+    if(typ == 1)
+    {
+        easy->setEnabled(true);
+        medium->setEnabled(true);
+        hard->setEnabled(true);
+        etykietaTyp->setText("Wybierz typ gry: \t Klasyczne");
+    }
+    if(typ == 2)
+    {
+        easy->setEnabled(false);
+        medium->setEnabled(false);
+        hard->setEnabled(false);
+        etykietaTyp->setText("Wybierz typ gry: \t Samurajskie");
+    }
+}
+
+Opcje::~Opcje()
+{
+    delete easy;
+    delete medium;
+    delete hard;
+    delete back;
+    delete klasyczny;
+    delete samurajskie;
+    delete opcje1;
+    delete etykietaTyp;
+    delete poziom;
+    delete reset;
+    delete resetW;
+}
+
+void Opcje::wczytajConf()
+{
+    std::fstream dane;
+    dane.open("conf.txt",std::ios::in);
+    if(dane.is_open())
+    {
+        dane>>poziomC>>typ;
+        dane.close();
+    }
 }
 
 void Opcje::easy_clicked()

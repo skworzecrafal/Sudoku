@@ -11,7 +11,6 @@ public:
     ~PlanszaSamuraj();
     Komorkas tab[5][9][9];
     QFrame* linie[40];
-    QWidget* pole;
     void zerujPola();
 
 };

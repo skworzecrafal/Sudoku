@@ -10,18 +10,20 @@
 #include "dodajwynik.h"
 #include "plansza99.h"
 #include "planszasamuraj.h"
+#include "styltekstu.h"
 
 class Gra:
-        public Generacja
+        public Generacja,
+        public StylTekstu
 {
 public:
-    Gra();
+    Gra(QWidget *parent=0);
+    ~Gra();
     QTimer* zegar;
     Opcje o_opcje;
     DodajWynik o_dodajWynik;
     int sek,min;
 
-    void wywolajKonstruktory(QWidget *parent=0);
     void wypisz(bool w);
     void wypisz(bool w, Komorkas plansza[5][9][9]);
     void generuj(int typ);
@@ -34,8 +36,12 @@ public:
     int sprawdz();
     void czas();
     void dodWynik();
-    void wczytajConf();
     void zapiszConf();
+    void resetWynikow();
+    void podpowiedz(Komorka plansza[9][9]);
+    void podpowiedz(Komorkas plansza[5][9][9]);
+    int podpowiedz();
+    void pomoc();
 
 
 private:
@@ -43,13 +49,16 @@ private:
     OknoWyniki o_wyniki;
     Plansza99* klasyczne;
     PlanszaSamuraj* samuraj;
+    QLabel* instrukcja;
+    QLabel* inf_lpodp;
 
     bool opcjeOpen;
     bool wynikiOpen;
     bool isClickedCheck;
     bool klasyczneOpen;
     bool samurajOpen;
-    int wpisane;
+    bool pomocOpen;
+    int wpisane,lPodpowiedzi;
 };
 
 #endif // GRA_H

@@ -4,34 +4,31 @@
 
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+    QMainWindow(parent),Gra(this)
 {
     setFixedSize(1000,720);
     setGeometry(185,35,1000,720);
     stworzUi();
-    wczytajConf();
-    wywolajKonstruktory(this);
 
     /*
      *ustawienie akcji do buttonów
      */
-//    connect(oknoOpcje.easy,SIGNAL(clicked()),SLOT(easy_clicked()));
-//    connect(oknoOpcje.medium,SIGNAL(clicked()),this,SLOT(medium_clicked()));
-//    connect(oknoOpcje.hard,SIGNAL(clicked()),this,SLOT(hard_clicked()));
-//    connect(oknoOpcje.reset,SIGNAL(clicked()),this,SLOT(resetWynikow()));
+    connect(o_opcje.reset,SIGNAL(clicked()),this,SLOT(reset_clicked()));
     connect(o_dodajWynik.ok,SIGNAL(clicked()),this,SLOT(nowyWynik()));
     connect(o_dodajWynik.gracz,SIGNAL(returnPressed()),this,SLOT(nowyWynik()));
-    connect(przycisk[4],SIGNAL(clicked()),this,SLOT(wyjscie_clicked()));
     connect(przycisk[0],SIGNAL(clicked()),this,SLOT(nowaGra_clicked()));
-    connect(zegar,SIGNAL(timeout()),this,SLOT(zegarek()));
     connect(przycisk[1],SIGNAL(clicked()),this,SLOT(opcje_clicked()));
-    connect(przycisk[5],SIGNAL(clicked()),this,SLOT(Check_clicked()));
     connect(przycisk[2],SIGNAL(clicked()),this,SLOT(wyniki_clicked()));
+    connect(przycisk[3],SIGNAL(clicked()),this,SLOT(pomoc_clicked()));
+    connect(przycisk[4],SIGNAL(clicked()),this,SLOT(wyjscie_clicked()));
+    connect(przycisk[5],SIGNAL(clicked()),this,SLOT(Check_clicked()));
+    connect(przycisk[6],SIGNAL(clicked()),this,SLOT(wskazowka()));
+    connect(zegar,SIGNAL(timeout()),this,SLOT(zegarek()));
 }
 
 MainWindow::~MainWindow()
 {
-    for(int i=0;i<8;i++)
+    for(int i=0;i<7;i++)
         delete przycisk[i];
     delete naglowek;
     delete zegarWyswietlacz;
@@ -41,7 +38,7 @@ MainWindow::~MainWindow()
 void MainWindow::stworzUi()
 {
     int i;
-    for(i=0;i<8;i++)
+    for(i=0;i<7;i++)
         przycisk[i] = new QPushButton(this);
     naglowek = new QLabel(this);
     zegarWyswietlacz = new QLabel(this);
@@ -75,14 +72,16 @@ void MainWindow::stworzUi()
     wynikGry->setPalette(paleta);
     wynikGry->setFont(czcionka);
 
-    zegarWyswietlacz->setGeometry(770,480,230,40);
+    zegarWyswietlacz->setGeometry(760,480,240,40);
     zegarWyswietlacz->setAlignment(Qt::AlignLeft);
-    setStyl("MS Shell",QPalette::Text,Qt::black,30);
+    setStyl("Comic Sans MS",QPalette::Text,Qt::black,30);
     zegarWyswietlacz->setPalette(paleta);
     zegarWyswietlacz->setFont(czcionka);
+    zegarWyswietlacz->close();
     zegarWyswietlacz->setText("Czas gry:  "+QString::number(0)
                               +QString::number(0)+":"
                               +QString::number(0)+QString::number(0));
+
 
     setStyl("Comic Sans MS",QPalette::Text,Qt::black,15);
     przycisk[5]->setGeometry(800,430,200,30);
@@ -90,15 +89,12 @@ void MainWindow::stworzUi()
     przycisk[5]->setFont(czcionka);
     przycisk[5]->setText("Sprawdź rozwiązanie");
 
-    setStyl("Comic Sans MS",QPalette::Text,Qt::black,10);
-    for(i=6;i<8;i++)
-    {
-        przycisk[i]->setGeometry(920,(i-6)*25+665,70,20);
-        przycisk[i]->setPalette(paleta);
-        przycisk[i]->setFont(czcionka);
-    }
-    przycisk[6]->setText("1 cyfra");
-    przycisk[7]->setText("wszystkie");
+    setStyl("Comic Sans MS",QPalette::Text,Qt::black,15);
+    przycisk[6]->setGeometry(870,665,120,30);
+    przycisk[6]->setPalette(paleta);
+    przycisk[6]->setFont(czcionka);
+    przycisk[6]->setText("Podpowiedź");
+    przycisk[6]->setEnabled(false);
 }
 
 /*
@@ -116,11 +112,13 @@ void MainWindow::zegarek()
  */
 void MainWindow::nowaGra_clicked()
 {
+    zegarWyswietlacz->show();
     nowaGra();
     zegarWyswietlacz->setText("Czas gry:  "+QString::number(min/10)
                               +QString::number(min%10)+":"
                               +QString::number(sek/10)+QString::number(sek%10));
     wynikGry->setText("");
+    przycisk[6]->setEnabled(true);
 }
 
 /*
@@ -148,47 +146,14 @@ void MainWindow::Check_clicked()
         }
 }
 
-//void MainWindow::on_pomoc_clicked()
-//{
-//    int tabl[9][9],tab1[81];
-//    int w,k,wsp,rozm=0;
-//    srand(time(NULL));
-//    for(w=0;w<9;w++)
-//        for(k=0;k<9;k++)
-//        {
-//            tabl[w][k]=w*10+k;
+void MainWindow::wskazowka()
+{
+    if(!podpowiedz())
+    {
+       przycisk[6]->setEnabled(false);
+    }
+}
 
-//        }
-//    for(w=0;w<9;w++)
-//        for(k=0;k<9;k++)
-//        {
-//            if(!*plansza99->plansza[w][k].wartoscGra)
-//            {
-//                tab1[rozm]=tabl[w][k];
-//                rozm++;
-//            }
-
-//        }
-//    if(rozm)
-//    {
-//        wsp = rand() % rozm;
-//        w = tab1[wsp]/10;
-//        k = tab1[wsp] % 10;
-//        plansza99->plansza[w][k].pole->setText(QString::number(*plansza99->plansza[w][k].wartoscZnana));
-//        plansza99->plansza[w][k].pole->editingFinished();
-//    }
-//}
-
-//void MainWindow::on_pomoc_2_clicked()
-//{
-
-//    for(int w=0;w<9;w++)
-//        for(int k=0;k<9;k++)
-//        {
-//            plansza99->plansza[w][k].pole->setText(QString::number(*plansza99->plansza[w][k].wartoscZnana));
-//            plansza99->plansza[w][k].pole->editingFinished();
-//        }
-//}
 /*
  *wyjście z programu i zapisanie listy wyników do plików
  */
@@ -197,42 +162,7 @@ void MainWindow::wyjscie_clicked()
     wyjscie();
     close();
 }
-///*
-// * poziom łatwy
-// */
-//void MainWindow::easy_clicked()
-//{
-//    min = sek = 0;
-//    zegar->stop();
-//    if(plansza99Open)
-//        plansza99->close();
-//    if(samurajOpen)
-//        samuraj->close();
-//}
-///*
-// *poziom średni
-// */
-//void MainWindow::medium_clicked()
-//{
-//    min = sek = 0;
-//    zegar->stop();
-//    if(plansza99Open)
-//        plansza99->close();
-//    if(samurajOpen)
-//        samuraj->close();
-//}
-///*
-// *poziom trudny
-// */
-//void MainWindow::hard_clicked()
-//{
-//    min = sek = 0;
-//    zegar->stop();
-//    if(plansza99Open)
-//        plansza99->close();
-//    if(samurajOpen)
-//        samuraj->close();
-//}
+
 /*
  *otwarcie okna z listą wyników
  */
@@ -240,18 +170,22 @@ void MainWindow::wyniki_clicked()
 {
     wyniki();
 }
-///*
-// *reset listy wyników
-// */
-//void MainWindow::resetWynikow()
-//{
-//    for(int i=0;i<4;i++)
-//        lista[i].~ListaWynikow();
-//}
-///*
-// *slot dodania nowego wyniku
-// */
+/*
+ *reset listy wyników
+ */
+void MainWindow::reset_clicked()
+{
+    resetWynikow();
+}
+/*
+ *slot dodania nowego wyniku
+ */
 void MainWindow::nowyWynik()
 {
     dodWynik();
+}
+
+void MainWindow::pomoc_clicked()
+{
+    pomoc();
 }

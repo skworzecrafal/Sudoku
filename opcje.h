@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLabel>
+#include <fstream>
 #include "styltekstu.h"
 
 class Opcje:
@@ -12,22 +13,29 @@ class Opcje:
     Q_OBJECT
 public:
     Opcje();
-    QPushButton* easy;
-    QPushButton* medium;
-    QPushButton* hard;
-    QPushButton* back;
+    ~Opcje();
+
     QPushButton* reset;
-    QLabel* etykietaTyp;
-    QLabel* poziom;
+
 
     int poziomC;
     int typ;
 
+    void wczytajConf();
+
+
 private:
 
+    QPushButton* easy;
+    QPushButton* medium;
+    QPushButton* hard;
+    QPushButton* back;
     QPushButton* klasyczny;
     QPushButton* samurajskie;
     QLabel* opcje1;
+    QLabel* etykietaTyp;
+    QLabel* poziom;
+    QLabel* resetW;
 
 
 private slots:

@@ -5,6 +5,11 @@ Wynik::Wynik()
     nastepny = NULL;
 }
 
+Wynik::~Wynik()
+{
+    delete nastepny;
+}
+
 void Wynik::setImie(QString imie)
 {
     this->imie = imie;

@@ -10,6 +10,7 @@ private:
     int sekundy;
 public:
     Wynik();
+    ~Wynik();
     void setImie(QString imie);
     void setMinuty(int min);
     void setSekundy(int sek);

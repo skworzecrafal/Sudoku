@@ -13,6 +13,7 @@ public:
     int liczba;
     void wczytaj(char nazwa[]);
     void zapisz(char nazwa[]);
+    void listaCzysc();
     void dodaj(Wynik * nowy);
 };
 

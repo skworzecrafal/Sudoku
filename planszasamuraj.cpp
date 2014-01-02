@@ -125,6 +125,7 @@ PlanszaSamuraj::~PlanszaSamuraj()
                 delete tab[k][i][j].wartoscGra;
                 delete tab[k][i][j].backupWart;
                 delete tab[k][i][j].wartoscZnana;
+                delete tab[k][i][j].pole;
             }
     for( i=0;i<9;i++)
         for( j=0;j<9;j++)
@@ -137,6 +138,7 @@ PlanszaSamuraj::~PlanszaSamuraj()
                 delete tab[4][i][j].wartoscGra;
                 delete tab[4][i][j].backupWart;
                 delete tab[4][i][j].wartoscZnana;
+                delete tab[4][i][j].pole;
             }
         }
 }

@@ -1,7 +1,6 @@
 #ifndef GENERACJA_H
 #define GENERACJA_H
 #include <time.h>
-#include <stdlib.h>
 #include "komorkas.h"
 
 class Generacja

@@ -19,8 +19,9 @@ ListaWynikow::~ListaWynikow()
             delete iteracja;
             iteracja = iteracjanastepny;
         }while(iteracja != NULL);
-    liczba = 0;
-    pierwszy = ostatni = NULL;
+    delete iteracja;
+    delete iteracjanastepny;
+
 }
 
 void ListaWynikow::dodaj(Wynik *nowy)
@@ -120,4 +121,21 @@ void ListaWynikow::zapisz(char nazwa[])
             i++;
         }while((indeks!=NULL)&&(i!=10));
     plik.close();
+}
+
+void ListaWynikow::listaCzysc()
+{
+    Wynik *iteracja = pierwszy;
+    Wynik *iteracjanastepny = NULL;
+    if(liczba)
+        do
+        {
+            iteracjanastepny = iteracja->nastepny;
+            delete iteracja;
+            iteracja = iteracjanastepny;
+        }while(iteracja != NULL);
+    delete iteracja;
+    delete iteracjanastepny;
+    liczba = 0;
+    pierwszy = ostatni = NULL;
 }
