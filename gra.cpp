@@ -53,10 +53,10 @@ Gra::Gra(QWidget *parent)
     /*
      *załadowanie listy wyników
      */
-    lista[0].wczytaj("wyniki99easy.txt");
-    lista[1].wczytaj("wyniki99medium.txt");
-    lista[2].wczytaj("wyniki99hard.txt");
-    lista[3].wczytaj("wynikisamuraj.txt");
+    lista[0].wczytaj("wyniki99easy.sud");
+    lista[1].wczytaj("wyniki99medium.sud");
+    lista[2].wczytaj("wyniki99hard.sud");
+    lista[3].wczytaj("wynikisamuraj.sud");
 
     /*
      * utworzenie zagara do gry
@@ -212,10 +212,10 @@ void Gra::wyniki()
 
 void Gra::wyjscie()
 {
-    lista[0].zapisz("wyniki99easy.txt");
-    lista[1].zapisz("wyniki99medium.txt");
-    lista[2].zapisz("wyniki99hard.txt");
-    lista[3].zapisz("wynikisamuraj.txt");
+    lista[0].zapisz("wyniki99easy.sud");
+    lista[1].zapisz("wyniki99medium.sud");
+    lista[2].zapisz("wyniki99hard.sud");
+    lista[3].zapisz("wynikisamuraj.sud");
     zapiszConf();
     if(klasyczneOpen)
         klasyczne->close();
@@ -385,7 +385,7 @@ void Gra::dodWynik()
 void Gra::zapiszConf()
 {
     std::fstream plik;
-    plik.open("conf.txt",std::ios::out | std::ios::trunc);
+    plik.open("conf.sud",std::ios::out | std::ios::trunc);
     plik<<o_opcje.poziomC<<" "<<o_opcje.typ;
     plik.close();
 }

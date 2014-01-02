@@ -127,7 +127,7 @@ Opcje::~Opcje()
 void Opcje::wczytajConf()
 {
     std::fstream dane;
-    dane.open("conf.txt",std::ios::in);
+    dane.open("conf.sud",std::ios::in);
     if(dane.is_open())
     {
         dane>>poziomC>>typ;
