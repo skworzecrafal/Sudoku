@@ -15,14 +15,17 @@ class OknoWyniki:
 public:
     OknoWyniki();
     ~OknoWyniki();
+
+
+    void wypisz(ListaWynikow lista[]);
+    void zamknij();
+
+private:
     QTabWidget* oknoWyniki;
     QWidget* poziom[4];
     QLabel* label[4][10][3]; // 0 - easy; 1 - medium; 2 - hard; 3 - samuraj;
     QLabel* info[4][2];
     int liczba[4];
-
-    void wypisz(ListaWynikow lista[]);
-    void zamknij();
 };
 
 #endif // OKNOWYNIKI_H

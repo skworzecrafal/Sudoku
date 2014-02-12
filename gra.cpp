@@ -157,29 +157,29 @@ void Gra::nowaGra()
     if(pomocOpen)
     {
         instrukcja->close();
-        pomocOpen = true;
+        pomocOpen = false;
     }
-    if(o_opcje.typ == 1)
+    if(o_opcje.getTyp() == 1)
     {
         klasyczne->show();
         klasyczneOpen = true;
-        if(o_opcje.poziomC==1)
+        if(o_opcje.getPoziomC()==1)
         {
             lPodpowiedzi = 3;
             inf_lpodp->setText("Pozostało "+QString::number(lPodpowiedzi)+" podpowiedzi.");
         }
-        if(o_opcje.poziomC==2)
+        if(o_opcje.getPoziomC()==2)
         {
             lPodpowiedzi = 4;
             inf_lpodp->setText("Pozostało "+QString::number(lPodpowiedzi)+" podpowiedzi.");
         }
-        if(o_opcje.poziomC==3)
+        if(o_opcje.getPoziomC()==3)
         {
             lPodpowiedzi = 5;
             inf_lpodp->setText("Pozostało "+QString::number(lPodpowiedzi)+" podpowiedzi.");
         }
     }
-    if(o_opcje.typ == 2)
+    if(o_opcje.getTyp() == 2)
     {
         samuraj->show();
         samurajOpen = true;
@@ -190,7 +190,7 @@ void Gra::nowaGra()
     min=sek=0;
 
     zegar->start(1000);
-    generuj(o_opcje.typ);
+    generuj(o_opcje.getTyp());
     isClickedCheck = false;
 }
 
@@ -204,7 +204,6 @@ void Gra::wyniki()
 {
     if(wynikiOpen)
         o_wyniki.zamknij();
-    o_wyniki.oknoWyniki->setCurrentIndex(0);
     o_wyniki.wypisz(lista);
     o_wyniki.show();
     wynikiOpen = true;
@@ -229,6 +228,10 @@ void Gra::wyjscie()
     {
         o_wyniki.zamknij();
         o_wyniki.close();
+    }
+    if(pomocOpen)
+    {
+        instrukcja->close();
     }
 }
 
@@ -352,11 +355,11 @@ int Gra::sprawdz(Komorkas plansza[5][9][9])
 
 int Gra::sprawdz()
 {
-    if(o_opcje.typ == 1)
+    if(o_opcje.getTyp() == 1)
     {
         return sprawdz(klasyczne->plansza);
     }
-    if(o_opcje.typ == 2)
+    if(o_opcje.getTyp() == 2)
     {
         return sprawdz(samuraj->tab);
     }
@@ -375,9 +378,9 @@ void Gra::czas()
 
 void Gra::dodWynik()
 {
-    if(o_opcje.typ == 1)
-        o_dodajWynik.dodaj(lista,o_opcje.poziomC,min,sek);
-    if(o_opcje.typ == 2)
+    if(o_opcje.getTyp() == 1)
+        o_dodajWynik.dodaj(lista,o_opcje.getPoziomC(),min,sek);
+    if(o_opcje.getTyp() == 2)
         o_dodajWynik.dodaj(lista,4,min,sek);
     o_dodajWynik.close();
 }
@@ -386,7 +389,7 @@ void Gra::zapiszConf()
 {
     std::fstream plik;
     plik.open("conf.sud",std::ios::out | std::ios::trunc);
-    plik<<o_opcje.poziomC<<" "<<o_opcje.typ;
+    plik<<o_opcje.getPoziomC()<<" "<<o_opcje.getTyp();
     plik.close();
 }
 
@@ -460,9 +463,9 @@ int Gra::podpowiedz()
 {
     if(lPodpowiedzi)
     {
-        if(o_opcje.typ == 1)
+        if(o_opcje.getTyp() == 1)
             podpowiedz(klasyczne->plansza);
-        if(o_opcje.typ == 2)
+        if(o_opcje.getTyp() == 2)
             podpowiedz(samuraj->tab);
         lPodpowiedzi--;
         if(lPodpowiedzi==1)
@@ -488,7 +491,7 @@ void Gra::generuj(int typ)
     int i,j;
     if(typ==1)
     {
-        generowanie(klasyczne->plansza,o_opcje.poziomC);
+        generowanie(klasyczne->plansza,o_opcje.getPoziomC());
         wypisz(true);
     }
     if(typ==2)

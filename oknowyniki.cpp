@@ -77,6 +77,7 @@ void OknoWyniki::wypisz(ListaWynikow lista[])
             liczba[i] = j;
         }
     }
+    oknoWyniki->setCurrentIndex(0);
 }
 
 void OknoWyniki::zamknij()
@@ -94,6 +95,7 @@ void OknoWyniki::zamknij()
                 label[i][j][k]->setText("");
             }
     }
+
 }
 
 OknoWyniki::~OknoWyniki()

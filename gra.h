@@ -22,7 +22,7 @@ public:
     QTimer* zegar;
     Opcje o_opcje;
     DodajWynik o_dodajWynik;
-    int sek,min;
+
 
     void wypisz(bool w);
     void wypisz(bool w, Komorkas plansza[5][9][9]);
@@ -42,6 +42,12 @@ public:
     void podpowiedz(Komorkas plansza[5][9][9]);
     int podpowiedz();
     void pomoc();
+    int getSek() {return sek;}
+    int getMin() {return min;}
+    bool getKlasyczneOpen() {return klasyczneOpen;}
+    bool getSamurajOpen() {return samurajOpen;}
+
+
 
 
 private:
@@ -52,11 +58,12 @@ private:
     QLabel* instrukcja;
     QLabel* inf_lpodp;
 
+    int sek,min;
+    bool klasyczneOpen;
+    bool samurajOpen;
     bool opcjeOpen;
     bool wynikiOpen;
     bool isClickedCheck;
-    bool klasyczneOpen;
-    bool samurajOpen;
     bool pomocOpen;
     int wpisane,lPodpowiedzi;
 };

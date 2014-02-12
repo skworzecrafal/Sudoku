@@ -10,8 +10,11 @@ public:
     PlanszaSamuraj(QWidget *parent=0);
     ~PlanszaSamuraj();
     Komorkas tab[5][9][9];
-    QFrame* linie[40];
+
     void zerujPola();
+
+private:
+    QFrame* linie[40];
 
 };
 

@@ -4,13 +4,12 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui webkitwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Sudoku
 TEMPLATE = app
-
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -41,4 +40,4 @@ HEADERS  += mainwindow.h \
     styltekstu.h \
     gra.h
 
-FORMS    +=
+RC_FILE = app.rc

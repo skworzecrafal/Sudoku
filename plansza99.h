@@ -11,6 +11,8 @@ public:
     Plansza99(QWidget *parent);
     ~Plansza99();
     Komorka plansza[9][9];
+
+private:
     QFrame* linie[8];
 
 };

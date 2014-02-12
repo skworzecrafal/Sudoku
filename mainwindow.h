@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include "gra.h"
+#include <QtWebKitWidgets/QtWebKitWidgets>
+#include <QUrl>
 
 
 class MainWindow :
@@ -28,9 +30,17 @@ private:
      * 6-pojedyncza podpowiedz
      */
     QPushButton* przycisk[7];
+    QPushButton* play;
+    QPushButton* stop;
+    QLabel* radio;
     QLabel* naglowek;
     QLabel* zegarWyswietlacz;
     QLabel* wynikGry;
+    QTimer* czekaj;
+    QUrl url;
+    QWebView* webview;
+    QTimer* czekanie;
+
 
 private slots:
 
@@ -53,6 +63,14 @@ private slots:
     void nowyWynik();
 
     void pomoc_clicked();
+
+    void czysc_wynik();
+
+    void wlacz();
+
+    void wylacz();
+
+    void poczekaniu();
 
 };
 

@@ -17,11 +17,9 @@ public:
 
     QPushButton* reset;
 
-
-    int poziomC;
-    int typ;
-
     void wczytajConf();
+    int getPoziomC() {return poziomC;}
+    int getTyp() {return typ;}
 
 
 private:
@@ -36,6 +34,9 @@ private:
     QLabel* etykietaTyp;
     QLabel* poziom;
     QLabel* resetW;
+
+    int poziomC;
+    int typ;
 
 
 private slots:

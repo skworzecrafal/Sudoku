@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+
 
 
 
@@ -10,6 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     setGeometry(185,35,1000,720);
     stworzUi();
 
+    czekaj = new QTimer(this);
+    czekaj->stop();
+
+    czekanie = new QTimer(this);
+    czekanie->stop();
     /*
      *ustawienie akcji do buttonów
      */
@@ -24,6 +29,16 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(przycisk[5],SIGNAL(clicked()),this,SLOT(Check_clicked()));
     connect(przycisk[6],SIGNAL(clicked()),this,SLOT(wskazowka()));
     connect(zegar,SIGNAL(timeout()),this,SLOT(zegarek()));
+    connect(czekaj,SIGNAL(timeout()),this,SLOT(czysc_wynik()));
+    connect(play,SIGNAL(clicked()),this,SLOT(wlacz()));
+    connect(stop,SIGNAL(clicked()),this,SLOT(wylacz()));
+    connect(czekanie,SIGNAL(timeout()),this,SLOT(poczekaniu()));
+
+    webview = new QWebView();
+    webview->settings()->setAttribute(QWebSettings::PluginsEnabled,true);
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -33,6 +48,10 @@ MainWindow::~MainWindow()
     delete naglowek;
     delete zegarWyswietlacz;
     delete wynikGry;
+    delete play;
+    delete stop;
+    delete radio;
+    delete webview;
 }
 
 void MainWindow::stworzUi()
@@ -43,6 +62,9 @@ void MainWindow::stworzUi()
     naglowek = new QLabel(this);
     zegarWyswietlacz = new QLabel(this);
     wynikGry = new QLabel(this);
+    radio = new QLabel(this);
+    play = new QPushButton(this);
+    stop = new QPushButton(this);
 
     naglowek->setGeometry(0,5,700,60);
     naglowek->setAlignment(Qt::AlignCenter);
@@ -65,14 +87,14 @@ void MainWindow::stworzUi()
     przycisk[3]->setText("Pomoc");
     przycisk[4]->setText("Wyjście");
 
-    wynikGry->setGeometry(770,370,230,40);
+    wynikGry->setGeometry(770,320,230,40);
     wynikGry->setAlignment(Qt::AlignCenter);
     setStyl("Comic Sans MS",QPalette::Text,Qt::black,20);
     czcionka.setBold(false);
     wynikGry->setPalette(paleta);
     wynikGry->setFont(czcionka);
 
-    zegarWyswietlacz->setGeometry(760,480,240,40);
+    zegarWyswietlacz->setGeometry(760,430,240,40);
     zegarWyswietlacz->setAlignment(Qt::AlignLeft);
     setStyl("Comic Sans MS",QPalette::Text,Qt::black,30);
     zegarWyswietlacz->setPalette(paleta);
@@ -82,19 +104,36 @@ void MainWindow::stworzUi()
                               +QString::number(0)+":"
                               +QString::number(0)+QString::number(0));
 
+    setStyl("Comic Sans MS",QPalette::Text,Qt::black,25);
+    radio->setGeometry(760,525,240,40);
+    radio->setAlignment(Qt::AlignCenter);
+    radio->setPalette(paleta);
+    radio->setFont(czcionka);
+    radio->setText("Radio RMF MAXXX");
+
 
     setStyl("Comic Sans MS",QPalette::Text,Qt::black,15);
-    przycisk[5]->setGeometry(800,430,200,30);
+    przycisk[5]->setGeometry(800,380,190,30);
     przycisk[5]->setPalette(paleta);
     przycisk[5]->setFont(czcionka);
     przycisk[5]->setText("Sprawdź rozwiązanie");
 
-    setStyl("Comic Sans MS",QPalette::Text,Qt::black,15);
     przycisk[6]->setGeometry(870,665,120,30);
     przycisk[6]->setPalette(paleta);
     przycisk[6]->setFont(czcionka);
     przycisk[6]->setText("Podpowiedź");
     przycisk[6]->setEnabled(false);
+
+    play->setGeometry(770,575,105,30);
+    play->setPalette(paleta);
+    play->setFont(czcionka);
+    play->setText("Włącz");
+
+    stop->setGeometry(885,575,105,30);
+    stop->setPalette(paleta);
+    stop->setFont(czcionka);
+    stop->setText("Wyłącz");
+    stop->setEnabled(false);
 }
 
 /*
@@ -103,9 +142,11 @@ void MainWindow::stworzUi()
 void MainWindow::zegarek()
 {
     czas();
-    zegarWyswietlacz->setText("Czas gry:  "+QString::number(min/10)
-                               +QString::number(min%10)+":"
-                               +QString::number(sek/10)+QString::number(sek%10));
+    int m = getMin();
+    int s = getSek();
+    zegarWyswietlacz->setText("Czas gry:  "+QString::number(m/10)
+                               +QString::number(m%10)+":"
+                               +QString::number(s/10)+QString::number(s%10));
 }
 /*
  *  obsługa nowej gry
@@ -114,9 +155,9 @@ void MainWindow::nowaGra_clicked()
 {
     zegarWyswietlacz->show();
     nowaGra();
-    zegarWyswietlacz->setText("Czas gry:  "+QString::number(min/10)
-                              +QString::number(min%10)+":"
-                              +QString::number(sek/10)+QString::number(sek%10));
+    zegarWyswietlacz->setText("Czas gry:  "+QString::number(0)
+                              +QString::number(0)+":"
+                              +QString::number(0)+QString::number(0));
     wynikGry->setText("");
     przycisk[6]->setEnabled(true);
 }
@@ -134,16 +175,26 @@ void MainWindow::opcje_clicked()
  */
 void MainWindow::Check_clicked()
 {
-    int w = sprawdz();
-    if(w<0)
+    if(getKlasyczneOpen()||getSamurajOpen())
     {
-        wynikGry->setText("Może innym razem :(");
-    }
-    else
-        if(w>0)
+        int w = sprawdz();
+        if(w<0)
         {
-            wynikGry->setText("Gratulacje!!! ;)");
+            wynikGry->setText("Może innym razem :(");
         }
+        else
+        {
+            if(w>0)
+            {
+                wynikGry->setText("Gratulacje!!! ;)");
+            }
+            else
+            {
+                wynikGry->setText("Są jeszcze puste pola!");
+                czekaj->start(2000);
+            }
+        }
+    }
 }
 
 void MainWindow::wskazowka()
@@ -159,6 +210,7 @@ void MainWindow::wskazowka()
  */
 void MainWindow::wyjscie_clicked()
 {
+    wylacz();
     wyjscie();
     close();
 }
@@ -188,4 +240,39 @@ void MainWindow::nowyWynik()
 void MainWindow::pomoc_clicked()
 {
     pomoc();
+}
+
+void MainWindow::czysc_wynik()
+{
+    wynikGry->setText("");
+    czekaj->stop();
+}
+
+void MainWindow::wlacz()
+{
+    url.setUrl("http://www.rmfon.pl/play,6");
+    webview->setUrl(url);
+    webview->setGeometry(250,100,850,600);
+    webview->show();
+    play->setEnabled(false);
+    stop->setEnabled(true);
+    this->activateWindow();
+    czekanie->start(30000);
+//    webview->setVisible(false);
+
+}
+
+void MainWindow::wylacz()
+{
+    url.setUrl("");
+    webview->setUrl(url);
+    webview->close();
+    play->setEnabled(true);
+    stop->setEnabled(false);
+}
+
+void MainWindow::poczekaniu()
+{
+    webview->hide();
+    czekanie->stop();
 }
